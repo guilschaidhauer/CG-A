@@ -10,5 +10,7 @@ public:
 	~Render();
 
 	virtual void RenderScene(vector<Sphere> objects, CameraDefinition camera, float w, float h) = 0;
+
+	RGBType *pixels;
 };
 

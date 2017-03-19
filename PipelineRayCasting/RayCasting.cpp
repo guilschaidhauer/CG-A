@@ -12,40 +12,11 @@ RayCasting::~RayCasting()
 }
 
 
-/*
-A(xA,yA,zA) and B(xB,yB,zB) be two different points on the line
-C(xC,yC,zC) be the center of the sphere
-r be the radius of the sphere
-the cartesian equation of the sphere is:
-
-(x-xC)²+(y-yC)²+(z-zC)²=r²
-let us write the parametric equation of the line (parameter d):
-
-x = xA + d*(xB-xA)
-y = yA + d*(yB-yA)
-z = zA + d*(zB-zA)
-replacing in the sphere equation yields:
-
-(xA + d(xB-xA) - xC)²+(yA + d(yB-yA) - yC)²+(zA + d(zB-zA) - zC)²=r²
-This is a quadratic equation in d, where the discrimant is:
-
-Delta=b²-4*a*c
-with:
-
-a = (xB-xA)²+(yB-yA)²+(zB-zA)²
-b = 2*((xB-xA)(xA-xC)+(yB-yA)(yA-yC)+(zB-zA)(zA-zC))
-c = (xA-xC)²+(yA-yC)²+(zA-zC)²-r²
-
-
-A = camera
-B = rayEndPoint
-C = objectPosition
-
-*/
-
 void RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, float w, float h)
 {
 	float raySize = 15;
+
+	//TODO implement raycasting here
 
 	/*Sphere sphere = objects[0];
 

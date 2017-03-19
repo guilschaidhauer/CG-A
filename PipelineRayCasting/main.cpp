@@ -14,12 +14,21 @@ ImageProcessor *myImageProcessor;
 OutputProcessor *myOutputProcessor;
 EntryProcessor *myEntryPocessor;
 
+//TODO use params from file instead
+void defineParams()
+{
+	myParamsFile.output.w = 1024;
+	myParamsFile.output.h = 768;
+}
+
 void init()
 {
 	myRender = new RayCasting();
 	myImageProcessor = new PNGProcessor();
 	myOutputProcessor = new StandardOutputProcessor();
 	myEntryPocessor = new StandardEntryProcess();
+
+	defineParams();
 }
 
 void processEntry(ParamsFile paramsFile) 
@@ -37,16 +46,17 @@ void processImage()
 	myImageProcessor->processImage();
 }
 
-void processOutput(string fileName)
+void processOutput(string fileName, int w, int h, RGBType *newPixels)
 {
-	//myOutputProcessor->processOutput(fileName);
 	Image image;
 
 	image.dpi = 72;
-	image.w = 640;
-	image.h = 480;
+	image.w = w;
+	image.h = h;
 	int n = image.w*image.h;
 
+
+	//Comment this and implement Raycasting on the render
 	RGBType *pixels = new RGBType[n];
 
 	int pixelAtual;
@@ -72,7 +82,7 @@ int main(int argc, char** argv)
 	processEntry(myParamsFile);
 	processRender(myParamsFile.objects, myParamsFile.cameraDefinition, myParamsFile.output.w, myParamsFile.output.h);
 	processImage();
-	processOutput("Test2.bmp");
+	processOutput("RenderedImage.bmp", myParamsFile.output.w, myParamsFile.output.h, myRender->pixels);
 
 	system("pause");
 	return 0;
