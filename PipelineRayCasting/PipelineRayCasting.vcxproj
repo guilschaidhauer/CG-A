@@ -114,6 +114,7 @@
     <ClCompile Include="EntryProcessor.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageProcessor.cpp" />
+    <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maths_funcs.cpp" />
     <ClCompile Include="OutputProcessor.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="EntryProcessor.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageProcessor.h" />
+    <ClInclude Include="Intersection.h" />
     <ClInclude Include="maths_funcs.h" />
     <ClInclude Include="OutputProcessor.h" />
     <ClInclude Include="ParamsFile.h" />

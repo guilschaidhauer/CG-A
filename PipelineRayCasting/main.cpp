@@ -9,6 +9,7 @@
 using namespace std;
 
 ParamsFile myParamsFile;
+Image *image;
 Render *myRender;
 ImageProcessor *myImageProcessor;
 OutputProcessor *myOutputProcessor;
@@ -38,7 +39,7 @@ void processEntry(ParamsFile paramsFile)
 
 void processRender(vector<Sphere> objects, CameraDefinition camera, float w, float h)
 {
-	myRender->RenderScene(objects, camera, w, h);
+	image = myRender->RenderScene(objects, camera, w, h);
 }
 
 void processImage()
@@ -46,16 +47,16 @@ void processImage()
 	myImageProcessor->processImage();
 }
 
-void processOutput(string fileName, int w, int h, RGBType *newPixels)
+void processOutput(string fileName)
 {
-	Image *image = new Image(w, h);
+	//Image *image = new Image(w, h);
 
 	image->dpi = 72;
 	int n = image->w * image->h;
 
 
 	//Comment this and implement Raycasting on the render
-	RGBType *pixels = new RGBType[n];
+	image->pixels = new RGBType[n];
 
 	int pixelAtual;
 	for (int x = 0; x < image->w; x++)
@@ -64,13 +65,13 @@ void processOutput(string fileName, int w, int h, RGBType *newPixels)
 		{
 			pixelAtual = y*image->w + x;
 
-			pixels[pixelAtual].r = 23;
-			pixels[pixelAtual].g = 222;
-			pixels[pixelAtual].b = 222;
+			image->pixels[pixelAtual].r = 255;
+			image->pixels[pixelAtual].g = 0;
+			image->pixels[pixelAtual].b = 0;
 		}
 	}
 
-	image->SaveImage(fileName, image->w, image->h, image->dpi, pixels);
+	image->saveImage(fileName);
 }
 
 int main(int argc, char** argv)
@@ -89,7 +90,7 @@ int main(int argc, char** argv)
 	processImage();
 
 	//Create image
-	processOutput("RenderedImage.bmp", myParamsFile.output.w, myParamsFile.output.h, myRender->pixels);
+	processOutput("RenderedImage.bmp");
 
 	system("pause");
 	return 0;

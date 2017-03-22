@@ -22,11 +22,22 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 	for (int i = 0; i < w; i++) {
 		for (int j = 0; j < h; j++) {
 			Ray ray = ConstructRayThroughPixel(camera, i, j, w, h);
-			//Intersection hit = FindIntersection(ray, scene);
-			//image->setPixel(GetColor(hit), i, j);
+			Intersection hit = FindIntersection(ray, objects);
+			image->setPixel(GetColor(hit), i, j);
 		}
 	}
 	return image;
+}
+
+Intersection RayCasting::FindIntersection(Ray ray, vector<Sphere> scene)
+{
+
+	return Intersection();
+}
+
+RGBType RayCasting::GetColor(Intersection hit)
+{
+	return RGBType();
 }
 
 //Image size should not be passed here

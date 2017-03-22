@@ -3,6 +3,7 @@
 #include <math.h>
 #include "Image.h"
 #include "Ray.h"
+#include "Intersection.h"
 #include "Structures.h"
 
 using namespace std;

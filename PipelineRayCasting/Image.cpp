@@ -5,7 +5,7 @@
 Image::Image(int width, int height)
 {
 	w = width;
-	h = height;
+	h = height; 
 }
 
 
@@ -13,7 +13,7 @@ Image::~Image()
 {
 }
 
-void Image::SaveImage(string fileName, int w, int h, int dpi, RGBType *data)
+void Image::saveImage(string fileName)
 {
 	FILE *file;
 	int k = w*h;
@@ -64,16 +64,21 @@ void Image::SaveImage(string fileName, int w, int h, int dpi, RGBType *data)
 
 	for (int i = 0; i < k; i++)
 	{
-		RGBType rgb = data[i];
+		RGBType rgb = pixels[i];
 
-		double red = (data[i].r * 255);
-		double green = (data[i].g * 255);
-		double blue = (data[i].b * 255);
+		double red = (pixels[i].r);
+		double green = (pixels[i].g);
+		double blue = (pixels[i].b);
 
-		unsigned char color[3] = { (int)floor(red), (int)floor(green), (int)floor(blue) };
+		unsigned char color[3] = {blue, green, red};
 
 		fwrite(color, 1, 3, file);
 	}
 
 	fclose(file);
+}
+
+void Image::setPixel(RGBType color, int width, int height)
+{
+	pixels[height * w + width] = color;
 }

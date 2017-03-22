@@ -12,10 +12,13 @@ public:
 	Image(int width, int height);
 	~Image();
 
-	void SaveImage(string fileName, int w, int h, int dpi, RGBType *data);
+	void saveImage(string fileName);
+
+	void setPixel(RGBType color, int w, int h);
 
 	int w;
 	int h;
 	int dpi;
+	RGBType* pixels;
 };
 
