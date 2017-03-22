@@ -2,8 +2,10 @@
 
 
 
-Image::Image()
+Image::Image(int width, int height)
 {
+	w = width;
+	h = height;
 }
 
 

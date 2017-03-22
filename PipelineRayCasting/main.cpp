@@ -48,23 +48,21 @@ void processImage()
 
 void processOutput(string fileName, int w, int h, RGBType *newPixels)
 {
-	Image image;
+	Image *image = new Image(w, h);
 
-	image.dpi = 72;
-	image.w = w;
-	image.h = h;
-	int n = image.w*image.h;
+	image->dpi = 72;
+	int n = image->w * image->h;
 
 
 	//Comment this and implement Raycasting on the render
 	RGBType *pixels = new RGBType[n];
 
 	int pixelAtual;
-	for (int x = 0; x < image.w; x++)
+	for (int x = 0; x < image->w; x++)
 	{
-		for (int y = 0; y < image.h; y++)
+		for (int y = 0; y < image->h; y++)
 		{
-			pixelAtual = y*image.w + x;
+			pixelAtual = y*image->w + x;
 
 			pixels[pixelAtual].r = 23;
 			pixels[pixelAtual].g = 222;
@@ -72,16 +70,25 @@ void processOutput(string fileName, int w, int h, RGBType *newPixels)
 		}
 	}
 
-	image.SaveImage(fileName, image.w, image.h, image.dpi, pixels);
+	image->SaveImage(fileName, image->w, image->h, image->dpi, pixels);
 }
 
 int main(int argc, char** argv)
 {
 	init();
 
+	//Read file
 	processEntry(myParamsFile);
+
+	//Add configs from file to myParamsFile
+
+	//Render Scene
 	processRender(myParamsFile.objects, myParamsFile.cameraDefinition, myParamsFile.output.w, myParamsFile.output.h);
+
+	//Add filter
 	processImage();
+
+	//Create image
 	processOutput("RenderedImage.bmp", myParamsFile.output.w, myParamsFile.output.h, myRender->pixels);
 
 	system("pause");

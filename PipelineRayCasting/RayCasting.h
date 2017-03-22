@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-#include <math.h>
 #include "Render.h"
 
 using namespace std;
@@ -11,6 +9,8 @@ public:
 	RayCasting();
 	~RayCasting();
 
-	void RenderScene(vector<Sphere> objects, CameraDefinition camera, float w, float h) override;
+	Image* RenderScene(vector<Sphere> objects, CameraDefinition camera, int w, int h) override;
+
+	//Ray ConstructRayThroughPixel(CameraDefinition camera, int x, int y);
 };
 

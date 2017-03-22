@@ -9,7 +9,7 @@ using namespace std;
 class Image
 {
 public:
-	Image();
+	Image(int width, int height);
 	~Image();
 
 	void SaveImage(string fileName, int w, int h, int dpi, RGBType *data);

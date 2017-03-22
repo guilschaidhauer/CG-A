@@ -12,7 +12,7 @@ RayCasting::~RayCasting()
 }
 
 
-void RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, float w, float h)
+Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, int w, int h)
 {
 	float raySize = 15;
 
@@ -54,28 +54,28 @@ void RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, fl
 
 	//possivel codigo:
 
-	//Image* image = new Image(width, height);
-	//for (int i = 0; i < width; i++) {
-	//	for (int j = 0; j < height; j++) {
-	//		Ray ray = ConstructRayThroughPixel(camera, i, j);
-	//		Intersection hit = FindIntersection(ray, scene);
-	//		image->setPixel(GetColor(hit), i, j);
-	//	}
-	//}
-	//return image;
+	Image* image = new Image(w, h);
+	for (int i = 0; i < w; i++) {
+		for (int j = 0; j < h; j++) {
+			//Ray ray = ConstructRayThroughPixel(camera, i, j);
+			//Intersection hit = FindIntersection(ray, scene);
+			//image->setPixel(GetColor(hit), i, j);
+		}
+	}
+	return image;
 }
 
 //possivel codigo:
 //
 //
-//Ray Raycasting::ConstructRayThroughPixel(Camera camera, int x, int y) {
-//
-//	float imageAspectRatio = imageWidth / (float)imageHeight; // assuming width > height 
-//	float Px = (2 * ((x + 0.5) / imageWidth) - 1) * tan(fov / 2 * M_PI / 180) * imageAspectRatio;
-//	float Py = (1 - 2 * ((y + 0.5) / imageHeight) * tan(fov / 2 * M_PI / 180);
-//	vec3 rayOrigin(camera.position);
-//	vec3 rayDirection = vec3(Px, Py, -1) - rayOrigin; // note that this just equal to Vec3f(Px, Py, -1); 
-//	rayDirection = normalise(rayDirection);
-//	Ray newRay(rayOrigin, rayDirection);
-//	return newRay;
-//}
+/*Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y) {
+
+	float imageAspectRatio = imageWidth / (float)imageHeight; // assuming width > height 
+	float Px = (2 * ((x + 0.5) / imageWidth) - 1) * tan(fov / 2 * M_PI / 180) * imageAspectRatio;
+	float Py = (1 - 2 * ((y + 0.5) / imageHeight) * tan(fov / 2 * M_PI / 180);
+	vec3 rayOrigin(camera.position);
+	vec3 rayDirection = vec3(Px, Py, -1) - rayOrigin; // note that this just equal to Vec3f(Px, Py, -1); 
+	rayDirection = normalise(rayDirection);
+	Ray newRay(rayOrigin, rayDirection);
+	return newRay;
+}*/
