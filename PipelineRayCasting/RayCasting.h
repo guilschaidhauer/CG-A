@@ -11,6 +11,6 @@ public:
 
 	Image* RenderScene(vector<Sphere> objects, CameraDefinition camera, int w, int h) override;
 
-	//Ray ConstructRayThroughPixel(CameraDefinition camera, int x, int y);
+	Ray ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int imageWidth, int imageHeight);
 };
 

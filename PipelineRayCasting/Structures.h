@@ -1,10 +1,6 @@
 #pragma once
 #include <vector>
-
-struct Position
-{
-	float x, y, z;
-};
+#include "maths_funcs.h"
 
 struct RGBType
 {
@@ -18,12 +14,13 @@ struct Color
 
 struct CameraDefinition
 {
-	float ex, ey, ez;
+	vec3 position;
+	//float ex, ey, ez;
 };
 
 struct LightPointDefinition
 {
-	Position position;
+	vec3 position;
 	Color color;
 };
 
@@ -32,7 +29,7 @@ struct Sphere
 	float rx, ry, rz;
 	float radius;
 	Color color;
-	Position position;
+	vec3 position;
 	float refraction;
 };
 
