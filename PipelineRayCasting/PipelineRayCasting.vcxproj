@@ -115,9 +115,11 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageProcessor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="maths_funcs.cpp" />
     <ClCompile Include="OutputProcessor.cpp" />
     <ClCompile Include="ParamsFile.cpp" />
     <ClCompile Include="PNGProcessor.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="RayCasting.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="StandardEntryProcess.cpp" />
@@ -127,9 +129,11 @@
     <ClInclude Include="EntryProcessor.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageProcessor.h" />
+    <ClInclude Include="maths_funcs.h" />
     <ClInclude Include="OutputProcessor.h" />
     <ClInclude Include="ParamsFile.h" />
     <ClInclude Include="PNGProcessor.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="RayCasting.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="StandardEntryProcess.h" />
