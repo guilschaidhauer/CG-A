@@ -18,8 +18,8 @@ EntryProcessor *myEntryPocessor;
 //TODO use params from file instead
 void defineParams()
 {
-	myParamsFile.output.w = 1024;
-	myParamsFile.output.h = 768;
+	myParamsFile.output.w = 500;
+	myParamsFile.output.h = 500;
 }
 
 void init()
@@ -49,28 +49,6 @@ void processImage()
 
 void processOutput(string fileName)
 {
-	//Image *image = new Image(w, h);
-
-	image->dpi = 72;
-	int n = image->w * image->h;
-
-
-	//Comment this and implement Raycasting on the render
-	image->pixels = new RGBType[n];
-
-	int pixelAtual;
-	for (int x = 0; x < image->w; x++)
-	{
-		for (int y = 0; y < image->h; y++)
-		{
-			pixelAtual = y*image->w + x;
-
-			image->pixels[pixelAtual].r = 255;
-			image->pixels[pixelAtual].g = 0;
-			image->pixels[pixelAtual].b = 0;
-		}
-	}
-
 	image->saveImage(fileName);
 }
 

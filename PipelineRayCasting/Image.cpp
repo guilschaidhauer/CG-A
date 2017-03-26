@@ -6,6 +6,7 @@ Image::Image(int width, int height)
 {
 	w = width;
 	h = height; 
+	pixels = new RGBType[w*h];
 }
 
 
@@ -78,7 +79,13 @@ void Image::saveImage(string fileName)
 	fclose(file);
 }
 
-void Image::setPixel(RGBType color, int width, int height)
+void Image::setPixel(Vec3 color, int width, int height)
 {
-	pixels[height * w + width] = color;
+	RGBType newRBG;
+	newRBG.r = color.x;
+	newRBG.g = color.y;
+	newRBG.b = color.z;
+
+
+	pixels[height * w + width] = newRBG;
 }

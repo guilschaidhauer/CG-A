@@ -14,7 +14,7 @@ public:
 
 	void saveImage(string fileName);
 
-	void setPixel(RGBType color, int w, int h);
+	void setPixel(Vec3 color, int w, int h);
 
 	int w;
 	int h;

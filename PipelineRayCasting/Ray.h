@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include "maths_funcs.h"
 class Ray
 {
@@ -9,5 +9,5 @@ public:
 private:
 	vec3 direction;
 	vec3 origin;
-};
+};*/
 
