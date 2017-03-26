@@ -14,6 +14,9 @@ RayCasting::~RayCasting()
 
 Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, int w, int h)
 {
+	camera.x = 0;
+	camera.y = 0;
+	camera.z = 1;
 	const Vec3 white(255, 255, 255);
 	const Vec3 black(0, 0, 0);
 	const Vec3 red(255, 0, 0);
@@ -26,11 +29,11 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 
 	Image* image = new Image(w, h);
 
-	for (int y = 0; y < h; ++y) {
+	/*for (int y = 0; y < h; ++y) {
 		for (int x = 0; x < w; ++x) {
 			pix_col = black;
 
-			const Ray ray(Vec3(x, y, 0), /*Use camera*/Vec3(0, 0, 1));
+			const Ray ray(Vec3(x, y, 0), Vec3(0, 0, 1));
 			if (sphere.intersect(ray, t)) {
 				const Vec3 pi = ray.o + ray.d*t;
 				const Vec3 L = light.c - pi;
@@ -42,31 +45,28 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 				image->setPixel(pix_col, y, x);
 			}
 		}
-	}
+	}*/
 
 
 
 
-	/*float raySize = 15;
+	float raySize = 15;
 
 	//possivel codigo:
 
-	Image* image = new Image(w, h);
 	for (int i = 0; i < w; i++) {
 		for (int j = 0; j < h; j++) {
 			Ray ray = ConstructRayThroughPixel(camera, i, j, w, h);
-			Intersection hit = FindIntersection(ray, objects);
+			//Intersection hit = FindIntersection(ray, objects);
 			//image->setPixel(GetColor(hit), i, j);
 
-			RGBType color;
-			color.r = 255;
-			color.g = 255;
-			color.b = 0;
+			Vec3 color(255, 0, 0);
 
-			image->setPixel(color, i, j);
+			if (sphere.intersect(ray, t)) {
+				image->setPixel(color, i, j);
+			}
 		}
 	}
-	*/
 	return image;
 }
 
@@ -85,7 +85,7 @@ RGBType RayCasting::GetColor(Intersection hit)
 }
 
 //Image size should not be passed here
-/*
+
 Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int imageWidth, int imageHeight) {
 
 	//These should not be definded here
@@ -96,10 +96,14 @@ Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, 
 	float Px = (2 * ((x + 0.5) / imageWidth) - 1) * tan(fov / 2 * M_PI / 180) * imageAspectRatio;
 	//Added ) at the end
 	float Py = (1 - 2 * ((y + 0.5) / imageHeight) * tan(fov / 2 * M_PI / 180));
-	vec3 rayOrigin(camera.position);
-	vec3 rayDirection = vec3(Px, Py, -1) - rayOrigin; // note that this just equal to Vec3f(Px, Py, -1); 
-	rayDirection = normalise(rayDirection);
+	Vec3 rayOrigin(Vec3(camera.x, camera.y, camera.z));
+	Vec3 rayDirection = Vec3(Px, Py, -1) - rayOrigin; // note that this just equal to Vec3f(Px, Py, -1); 
+	rayDirection = rayDirection.normalize();
+
+	//Ray newRay(rayOrigin, rayDirection);
+	//return newRay;
+
 	Ray newRay(rayOrigin, rayDirection);
+
 	return newRay;
 }
-*/

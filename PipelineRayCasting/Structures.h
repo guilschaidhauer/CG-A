@@ -37,7 +37,7 @@ struct Color
 struct CameraDefinition
 {
 	vec3 position;
-	//float ex, ey, ez;
+	double x, y, z;
 };
 
 struct LightPointDefinition
