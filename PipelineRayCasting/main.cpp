@@ -20,6 +20,15 @@ void defineParams()
 {
 	myParamsFile.output.w = 500;
 	myParamsFile.output.h = 500;
+
+	Vec3 blue = Vec3(0, 0, 255);
+	Vec3 red = Vec3(255, 0, 0);
+
+	Sphere blueSphere(Vec3(myParamsFile.output.w * 0.5, myParamsFile.output.h *0.5, -10), 50, blue);
+	Sphere redSphere(Vec3(myParamsFile.output.w * 0.75, myParamsFile.output.h *0.75, -10), 50, red);
+
+	myParamsFile.objects.push_back(blueSphere);
+	myParamsFile.objects.push_back(redSphere);
 }
 
 void init()

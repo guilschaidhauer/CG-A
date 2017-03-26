@@ -37,7 +37,7 @@ struct Color
 struct CameraDefinition
 {
 	vec3 position;
-	//float ex, ey, ez;
+	float x, y, z;
 };
 
 struct LightPointDefinition
@@ -49,7 +49,8 @@ struct LightPointDefinition
 struct Sphere {
 	Vec3 c;
 	double r;
-	Sphere(const Vec3& c, double r) : c(c), r(r) {}
+	Vec3 color;
+	Sphere(const Vec3& c, double r, const Vec3& color) : c(c), r(r), color(color) {}
 	Vec3 getNormal(const Vec3& pi) const { return (pi - c) / r; }
 	bool intersect(const Ray& ray, double &t) const {
 		const Vec3 o = ray.o;
