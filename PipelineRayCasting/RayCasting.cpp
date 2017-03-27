@@ -16,7 +16,7 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 {
 	camera.x = w*0.5;
 	camera.y = h*0.5;
-	camera.z = 30;
+	camera.z = 200;
 
 	const Vec3 white(255, 255, 255);
 	const Vec3 black(0, 0, 0);
@@ -35,11 +35,11 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 			pix_col = black;
 
 			//Aqui ele tá construindo um raio do pixel da tela reto
-			const Ray ray(Vec3(x, y, 0), Vec3(0, 0, 1));
+			//const Ray ray(Vec3(x, y, 0), Vec3(0, 0, 1));
 
 			//TODO temos que fazer ele criar um raio da camera, passando por cada pixel. Mais ou menos como tá nessa funcão. Mas por algum motivo não funciona.
 			//TODO quando for tentar colocar essa função, olhar a posição da camera e dos objetos, pode ser que elas estajam erradas.
-			//Ray ray = ConstructRayThroughPixel(camera, y, x, w, h);
+			Ray ray = ConstructRayThroughPixel(camera, x, y, w, h);
 
 			for (int i = 0; i < objects.size(); i++) {
 				if (objects.at(i).intersect(ray, t)) {
@@ -73,7 +73,18 @@ RGBType RayCasting::GetColor(Intersection hit)
 	return RGBType();
 }
 
+Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int imageWidth, int imageHeight) {
+	
+	Vec3 rayOrigin(Vec3(camera.x, camera.y, camera.z));
+	Vec3 rayDirection = Vec3(x, y, 0) - rayOrigin; // note that this just equal to Vec3f(Px, Py, -1); 
+	rayDirection = rayDirection.normalize();
+
+	Ray newRay(rayOrigin, rayDirection);
+	return newRay;
+}
+
 //Image size should not be passed here
+/*
 Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int imageWidth, int imageHeight) {
 
 	//These should not be definded here
@@ -93,3 +104,4 @@ Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, 
 	Ray newRay(rayOrigin, rayDirection);
 	return newRay;
 }
+*/
