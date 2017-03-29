@@ -40,6 +40,7 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 		for (int y = 0; y < h; ++y) {
 
 			//Vec3 pontoNaGrid(camera.ortho.yf - y*celulaY, camera.ortho.xi + x*celulaX, 0.0);
+			//Test
 
 			pix_col = black;
 			image->setPixel(pix_col, x, y);
