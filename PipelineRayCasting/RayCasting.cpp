@@ -15,8 +15,8 @@ RayCasting::~RayCasting()
 Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, int w, int h)
 {
 	camera.x = w*0.5;
-	camera.y = h*0.75;
-	camera.z = 200;
+	camera.y = h*0.5;
+	camera.z = 30;
 
 	camera.ortho.xi = 0.0;
 	camera.ortho.xf = 10.0;
@@ -49,14 +49,14 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 
 			for (int i = 0; i < objects.size(); i++) {
 				if (objects.at(i).intersect(ray, t)) {
-					const Vec3 pi = ray.o + ray.d*t;
+					/*const Vec3 pi = ray.o + ray.d*t;
 					const Vec3 L = light.c - pi;
 					const Vec3 N = objects.at(i).getNormal(pi);
 					const double dt = dot(L.normalize(), N.normalize());
 
-					pix_col = (objects.at(i).color + white*dt) * 0.5;
-					//pix_col = objects.at(i).color;
-					clamp255(pix_col);
+					pix_col = (objects.at(i).color + white*dt) * 0.5;*/
+					pix_col = objects.at(i).color;
+					//clamp255(pix_col);
 					image->setPixel(pix_col, x, y);
 				}
 			}
@@ -69,7 +69,7 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int imageWidth, int imageHeight) {
 	
 	Vec3 rayOrigin(Vec3(camera.x, camera.y, camera.z));
-	Vec3 rayDirection = Vec3(x, y, 0) - rayOrigin; // note that this just equal to Vec3f(Px, Py, -1); 
+	Vec3 rayDirection = Vec3(x, y, 0) - rayOrigin;
 	rayDirection = rayDirection.normalize();
 
 	Ray newRay(rayOrigin, rayDirection);
