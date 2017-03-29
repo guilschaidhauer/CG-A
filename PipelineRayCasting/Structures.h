@@ -7,6 +7,10 @@ struct RGBType
 	float r, g, b;
 };
 
+struct Ortho {
+	float xi, xf, yi, yf;
+};
+
 struct Vec3 {
 	double x, y, z;
 	Vec3(double x, double y, double z) : x(x), y(y), z(z) {}
@@ -38,6 +42,7 @@ struct CameraDefinition
 {
 	vec3 position;
 	float x, y, z;
+	Ortho ortho;
 };
 
 struct LightPointDefinition

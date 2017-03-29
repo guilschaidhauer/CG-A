@@ -5,6 +5,7 @@
 #include "StandardOutputProcessor.h"
 #include "StandardEntryProcess.h"
 #include "Image.h"
+#include <time.h>   
 
 using namespace std;
 
@@ -15,6 +16,16 @@ ImageProcessor *myImageProcessor;
 OutputProcessor *myOutputProcessor;
 EntryProcessor *myEntryPocessor;
 
+Vec3 randomColor()
+{
+	return Vec3(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+}
+
+Vec3 randomPosition()
+{
+	return Vec3(rand() % 500 + 1, rand() % 500 + 1, (rand() % 50 + 15) * -1);
+}
+
 //TODO use params from file instead
 void defineParams()
 {
@@ -24,15 +35,23 @@ void defineParams()
 	Vec3 blue = Vec3(0, 0, 255);
 	Vec3 red = Vec3(255, 0, 0);
 
-	Sphere blueSphere(Vec3(myParamsFile.output.w * 0.5, myParamsFile.output.h *0.5, -10), 25, blue);
-	Sphere redSphere(Vec3(myParamsFile.output.w * 0.25, myParamsFile.output.h *0.25, -10), 50, red);
+	Sphere blueSphere(Vec3(myParamsFile.output.w * 0.5, myParamsFile.output.h *0.5, -15), 50, randomColor());
+	Sphere redSphere(Vec3(myParamsFile.output.w * 0.65, myParamsFile.output.h *0.65, -15), 30, randomColor());
 
 	myParamsFile.objects.push_back(blueSphere);
 	myParamsFile.objects.push_back(redSphere);
+
+	/*for (int i = 0; i < 10; i++)
+	{
+	Sphere blueSphere(randomPosition(), 30, randomColor());
+	myParamsFile.objects.push_back(blueSphere);
+	}*/
 }
 
 void init()
 {
+	srand(time(NULL));
+
 	myRender = new RayCasting();
 	myImageProcessor = new PNGProcessor();
 	myOutputProcessor = new StandardOutputProcessor();
