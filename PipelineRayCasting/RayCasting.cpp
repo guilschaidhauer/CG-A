@@ -14,13 +14,13 @@ RayCasting::~RayCasting()
 
 Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, int w, int h)
 {
-	camera.x = w*0.5;
-	camera.y = h*0.5;
-	camera.z = 30;
+	camera.x = 0;
+	camera.y = 0;
+	camera.z = 50;
 
-	camera.ortho.xi = 0.0;
+	camera.ortho.xi = -10.0;
 	camera.ortho.xf = 10.0;
-	camera.ortho.yi = 0.0;
+	camera.ortho.yi = -10.0;
 	camera.ortho.yf = 10.0;
 
 	float celulaX = (camera.ortho.xf - camera.ortho.xi) / w;
@@ -39,13 +39,13 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 	for (int x = 0; x < w; ++x) {
 		for (int y = 0; y < h; ++y) {
 
-			//Vec3 pontoNaGrid(camera.ortho.yf - y*celulaY, camera.ortho.xi + x*celulaX, 0.0);
+			Vec3 pontoNaGrid(camera.ortho.xf - y*celulaX, camera.ortho.yi + x*celulaY, 0.0);
 
 			pix_col = black;
 			image->setPixel(pix_col, x, y);
 
-			//Ray ray = ConstructRayThroughPixel(camera, pontoNaGrid.x, pontoNaGrid.y, w, h);
-			Ray ray = ConstructRayThroughPixel(camera, y, x, w, h);
+			Ray ray = ConstructRayThroughPixel(camera, pontoNaGrid.x, pontoNaGrid.y, pontoNaGrid.z, w, h);
+			//Ray ray = ConstructRayThroughPixel(camera, y, x, 0, w, h);
 
 			for (int i = 0; i < objects.size(); i++) {
 				if (objects.at(i).intersect(ray, t)) {
@@ -66,10 +66,10 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, CameraDefinition camera, 
 	return image;
 }
 
-Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int imageWidth, int imageHeight) {
+Ray RayCasting::ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int z, int imageWidth, int imageHeight) {
 	
 	Vec3 rayOrigin(Vec3(camera.x, camera.y, camera.z));
-	Vec3 rayDirection = Vec3(x, y, 0) - rayOrigin;
+	Vec3 rayDirection = Vec3(x, y, z) - rayOrigin;
 	rayDirection = rayDirection.normalize();
 
 	Ray newRay(rayOrigin, rayDirection);

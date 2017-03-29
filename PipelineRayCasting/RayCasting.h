@@ -11,7 +11,7 @@ public:
 
 	Image* RenderScene(vector<Sphere> objects, CameraDefinition camera, int w, int h) override;
 
-	Ray ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int imageWidth, int imageHeight);
+	Ray ConstructRayThroughPixel(CameraDefinition camera, int x, int y, int z, int imageWidth, int imageHeight);
 
 	void clamp255(Vec3& col) {
 		col.x = (col.x > 255) ? 255 : (col.x < 0) ? 0 : col.x;
