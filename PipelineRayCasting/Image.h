@@ -1,5 +1,6 @@
 #pragma once
 #include <stdio.h>
+#include <iostream>
 #include <fstream>
 #include <string>
 #include "Structures.h"
@@ -19,6 +20,8 @@ public:
 	~Image();
 
 	void saveImage(string fileName);
+	void setPixel(double r, double g, double b, int x, int y);
+
 	RGBType *pixels;
 
 	int w;

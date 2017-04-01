@@ -16,7 +16,7 @@ Image::~Image()
 
 void Image::saveImage(string fileName)
 {
-	/*FILE *file;
+	FILE *file;
 	int k = w*h;
 	int s = 4 * k;
 	int filesize = 54 + s;
@@ -71,17 +71,37 @@ void Image::saveImage(string fileName)
 		double green = (pixels[i].g);
 		double blue = (pixels[i].b);
 
-		unsigned char 
-		
-		
-		
-		
-		[3] = {blue, green, red};
+		/*cout << pixels[i].r << endl;
+		cout << pixels[i].g << endl;
+		cout << pixels[i].b << endl;
+
+		cout << endl;*/
+
+		unsigned char color[3] = { blue, green, red };
 
 		fwrite(color, 1, 3, file);
 	}
 
-	fclose(file);*/
+	fclose(file);
+
+	//delete pixels;
+}
+
+void Image::setPixel(double r, double g, double b, int x, int y)
+{
+
+	RGBType newRBG;
+	newRBG.r = r;
+	newRBG.g = g;
+	newRBG.b = b;
+
+	pixels[y * w + x] = newRBG;
+
+	cout << pixels[y * w + x].r<< endl;
+	cout << pixels[y * w + x].g << endl;
+	cout << pixels[y * w + x].b << endl;
+
+	cout << endl;
 }
 
 /*void Image::setPixel(Vec3 color, int width, int height)

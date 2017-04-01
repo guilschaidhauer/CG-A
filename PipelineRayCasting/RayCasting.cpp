@@ -180,7 +180,7 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, ve
 	return final_color.clip();
 }
 
-Image* RayCasting::RenderScene(/*vector<Sphere> objects, CameraDefinition camera,*/ int w, int h)
+Image* RayCasting::RenderScene(vector<Sphere> objects, Camera camera, int w, int h)
 {
 	cout << "rendering ..." << endl;
 
@@ -192,6 +192,8 @@ Image* RayCasting::RenderScene(/*vector<Sphere> objects, CameraDefinition camera
 	int height = 480;
 	int n = width*height;
 	RGBType *pixels = new RGBType[n];
+
+	Image* image = new Image(width, height);
 
 	const int aadepth = 1;
 	double aathreshold = 0.1;
@@ -352,23 +354,42 @@ Image* RayCasting::RenderScene(/*vector<Sphere> objects, CameraDefinition camera
 			double avgGreen = totalGreen / (aadepth*aadepth);
 			double avgBlue = totalBlue / (aadepth*aadepth);
 
-			pixels[thisone].r = avgRed;
+			////if (avgBlue != 0.0 || avgGreen != 0.0 || avgRed != 0.0)
+			////{
+			//	cout << avgBlue * 255 << endl;
+			//	cout << avgRed * 255 << endl;
+			//	cout << avgGreen * 255 << endl;
+
+			//	cout << endl;
+			////}
+				
+
+			/*pixels[thisone].r = avgRed;
 			pixels[thisone].g = avgGreen;
-			pixels[thisone].b = avgBlue;
+			pixels[thisone].b = avgBlue;*/
+			image->setPixel(avgRed * (double)255, avgGreen * (double)255, avgBlue * (double)255, x, y);
+			//image->setPixel(50, 10, 20, x, y);
+
+			/*cout << image->pixels[h * x + w].r<< endl;
+			cout << image->pixels[h * x + w].g << endl;
+			cout << image->pixels[h * x + w].b << endl;
+
+			cout << endl;*/
 		}
 	}
 
 	//savebmp("scene_anti-aliased.bmp", width, height, dpi, pixels);
 
-	delete pixels, tempRed, tempGreen, tempBlue;
+	//delete tempRed, tempGreen, tempBlue;
 
 	t2 = clock();
 	float diff = ((float)t2 - (float)t1) / 1000;
 
 	cout << diff << " seconds" << endl;
 
+	image->dpi = 72;
 
-	Image* image = new Image(w, h);
+	//image->pixels = pixels;
 
 	return image;
 }

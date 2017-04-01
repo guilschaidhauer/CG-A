@@ -39,9 +39,9 @@ void processEntry(ParamsFile paramsFile)
 	myEntryPocessor->processEntry(paramsFile);
 }
 
-void processRender(/*vector<Sphere> objects, CameraDefinition camera,*/ float w, float h)
+void processRender(vector<Sphere> objects, Camera camera, float w, float h)
 {
-	//image = myRender->RenderScene(objects, camera, w, h);
+	image = myRender->RenderScene(objects, camera, w, h);
 }
 
 void processImage()
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
 	//Add configs from file to myParamsFile
 
 	//Render Scene
-	//processRender(myParamsFile.objects, myParamsFile.cameraDefinition, myParamsFile.output.w, myParamsFile.output.h);
+	processRender(myParamsFile.objects, myParamsFile.camera, myParamsFile.output.w, myParamsFile.output.h);
 
 	//Add filter
 	processImage();
