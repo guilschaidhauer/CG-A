@@ -1,5 +1,7 @@
 #pragma once
 #include "Render.h"
+#include <time.h>
+//#include "Color.h"
 
 using namespace std;
 

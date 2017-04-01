@@ -71,7 +71,12 @@ void Image::saveImage(string fileName)
 		double green = (pixels[i].g);
 		double blue = (pixels[i].b);
 
-		unsigned char color[3] = {blue, green, red};
+		unsigned char 
+		
+		
+		
+		
+		[3] = {blue, green, red};
 
 		fwrite(color, 1, 3, file);
 	}

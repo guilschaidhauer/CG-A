@@ -111,34 +111,50 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="EntryProcessor.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageProcessor.cpp" />
     <ClCompile Include="Intersection.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maths_funcs.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="OutputProcessor.cpp" />
     <ClCompile Include="ParamsFile.cpp" />
     <ClCompile Include="PNGProcessor.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="RayCasting.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="StandardEntryProcess.cpp" />
     <ClCompile Include="StandardOutputProcessor.cpp" />
+    <ClCompile Include="Vect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="EntryProcessor.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageProcessor.h" />
     <ClInclude Include="Intersection.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="maths_funcs.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="OutputProcessor.h" />
     <ClInclude Include="ParamsFile.h" />
     <ClInclude Include="PNGProcessor.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="RayCasting.h" />
     <ClInclude Include="Render.h" />
+    <ClInclude Include="Source.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="StandardEntryProcess.h" />
     <ClInclude Include="StandardOutputProcessor.h" />
     <ClInclude Include="Structures.h" />
+    <ClInclude Include="Vect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
