@@ -9,10 +9,10 @@ public:
 	ParamsFile();
 	~ParamsFile();
 
-	CameraDefinition cameraDefinition;
+	/*CameraDefinition cameraDefinition;
 	LightPointDefinition lightPointDefinition;
 	vector<Sphere> objects;
 	PostRenderFilter postRenderFilter;
-	Output output;
+	Output output;*/
 };
 

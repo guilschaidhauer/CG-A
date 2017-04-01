@@ -7,6 +7,6 @@ public:
 	StandardOutputProcessor();
 	~StandardOutputProcessor();
 
-	void processOutput(string fileName, int w, int h, int dpi, RGBType *data) override;
+	void processOutput(string fileName, int w, int h, int dpi/*, RGBType *data*/) override;
 };
 

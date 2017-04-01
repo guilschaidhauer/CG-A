@@ -6,6 +6,12 @@
 
 using namespace std;
 
+struct RGBType {
+	double r;
+	double g;
+	double b;
+};
+
 class Image
 {
 public:
@@ -13,12 +19,10 @@ public:
 	~Image();
 
 	void saveImage(string fileName);
-
-	void setPixel(Vec3 color, int w, int h);
+	RGBType *pixels;
 
 	int w;
 	int h;
 	int dpi;
-	RGBType* pixels;
 };
 

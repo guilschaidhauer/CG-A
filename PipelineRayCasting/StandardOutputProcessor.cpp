@@ -11,6 +11,6 @@ StandardOutputProcessor::~StandardOutputProcessor()
 {
 }
 
-void StandardOutputProcessor::processOutput(string fileName, int w, int h, int dpi, RGBType *data)
+void StandardOutputProcessor::processOutput(string fileName, int w, int h, int dpi/*, RGBType *data*/)
 {
 }

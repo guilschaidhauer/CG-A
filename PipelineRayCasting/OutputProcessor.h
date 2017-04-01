@@ -10,6 +10,6 @@ public:
 	OutputProcessor();
 	~OutputProcessor();
 
-	virtual void processOutput(string fileName, int w, int h, int dpi, RGBType *data) = 0;
+	virtual void processOutput(string fileName, int w, int h, int dpi/*, RGBType *data*/) = 0;
 };
 
