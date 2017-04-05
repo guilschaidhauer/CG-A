@@ -2,43 +2,45 @@
 #define _COLOR_H
 
 class Color {
-	double red, green, blue, special;
+	double red, green, blue, special, n;
 	
 	public:
 	
 	Color ();
 	
-	Color (double, double, double, double);
+	Color (double, double, double, double, double);
 	
 	// method functions
 	double getColorRed() { return red;}
 	double getColorGreen() { return green; }
 	double getColorBlue() { return blue; }
 	double getColorSpecial() { return special; }
+	double getN() { return n; }
 	
 	void setColorRed(double redValue) { red = redValue; }
 	void setColorGreen(double greenValue) { green = greenValue; }
 	void setColorBlue(double blueValue) { blue = blueValue; }
 	void setColorSpecial(double specialValue) { special = specialValue; }
+	void setN(double newN) { n = newN; }
 	
 	double brightness() {
 		return(red + green + blue)/3;
 	}
 	
 	Color colorScalar(double scalar) {
-		return Color (red*scalar, green*scalar, blue*scalar, special);
+		return Color (red*scalar, green*scalar, blue*scalar, special, n);
 	}
 	
 	Color colorAdd(Color color) {
-		return Color (red + color.getColorRed(), green + color.getColorGreen(), blue + color.getColorBlue(), special);
+		return Color (red + color.getColorRed(), green + color.getColorGreen(), blue + color.getColorBlue(), special, n);
 	}
 	
 	Color colorMultiply(Color color) {
-		return Color (red*color.getColorRed(), green*color.getColorGreen(), blue*color.getColorBlue(), special);
+		return Color (red*color.getColorRed(), green*color.getColorGreen(), blue*color.getColorBlue(), special, n);
 	}
 	
 	Color colorAverage(Color color) {
-		return Color ((red + color.getColorRed())/2, (green + color.getColorGreen())/2, (blue + color.getColorBlue())/2, special);
+		return Color ((red + color.getColorRed())/2, (green + color.getColorGreen())/2, (blue + color.getColorBlue())/2, special, n);
 	}
 	
 	Color clip() {
@@ -56,7 +58,7 @@ class Color {
 		if (green < 0) {green = 0;}
 		if (blue < 0) {blue = 0;}
 		
-		return Color (red, green, blue, special);
+		return Color (red, green, blue, special, n);
 	}
 };
 

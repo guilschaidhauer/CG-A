@@ -6,9 +6,10 @@ Color::Color() {
 	blue = 0.5;
 }
 
-Color::Color(double r, double g, double b, double s) {
+Color::Color(double r, double g, double b, double s, double newN) {
 	red = r;
 	green = g;
 	blue = b;
 	special = s;
+	n = newN;
 }

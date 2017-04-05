@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <math.h>
 #include "Image.h"
 #include "Intersection.h"
 #include "Structures.h"

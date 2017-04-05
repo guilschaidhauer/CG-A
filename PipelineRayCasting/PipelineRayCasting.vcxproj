@@ -119,7 +119,6 @@
     <ClCompile Include="Intersection.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="maths_funcs.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="OutputProcessor.cpp" />
     <ClCompile Include="ParamsFile.cpp" />

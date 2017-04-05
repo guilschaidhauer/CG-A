@@ -67,6 +67,12 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, ve
 	Color winning_object_color = scene_objects.at(index_of_winning_object)->getColor();
 	Vect winning_object_normal = scene_objects.at(index_of_winning_object)->getNormalAt(intersection_position);
 
+	double fuckingN = scene_objects.at(index_of_winning_object)->getColor().getN();
+	//cout << "Antes: " << fuckingN << endl;
+
+	//cout << scene_objects.at(index_of_winning_object)->getColor().getN() << endl; 
+	//cout << winning_object_color.getN();
+
 	if (winning_object_color.getColorSpecial() == 2) {
 		// checkered/tile floor pattern
 
@@ -89,15 +95,40 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, ve
 	Color final_color = winning_object_color.colorScalar(ambientlight);
 
 	if (winning_object_color.getColorSpecial() > 0 && winning_object_color.getColorSpecial() <= 1) {
-		// reflection from objects with specular intensity
-		double dot1 = winning_object_normal.dotProduct(intersecting_ray_direction.negative());
-		Vect scalar1 = winning_object_normal.vectMult(dot1);
-		Vect add1 = scalar1.vectAdd(intersecting_ray_direction);
-		Vect scalar2 = add1.vectMult(2);
-		Vect add2 = intersecting_ray_direction.negative().vectAdd(scalar2);
-		Vect reflection_direction = add2.normalize();
 
-		Ray reflection_ray(intersection_position, reflection_direction);
+		Vect resultingRay;
+		double dot1 = winning_object_normal.dotProduct(intersecting_ray_direction.negative());
+
+		//cout << winning_object_color.getN();
+
+		//cout << "Depois: " << winning_object_color.getN() << endl
+
+		if (winning_object_color.getN() == 0)
+		{
+			Vect scalar1 = winning_object_normal.vectMult(dot1);
+			Vect add1 = scalar1.vectAdd(intersecting_ray_direction);
+			Vect scalar2 = add1.vectMult(2);
+			Vect add2 = intersecting_ray_direction.negative().vectAdd(scalar2);
+			resultingRay = add2.normalize();
+		}
+		else
+		{
+			double newN = 1 / fuckingN;
+
+			double cos1 = dot1;
+			double cos2 = sqrt(1 - (pow(newN, 2) * (1 - pow(cos1, 2))));
+
+			if (cos1 > 0)
+			{
+				resultingRay = intersecting_ray_direction.vectMult(newN).vectAdd(winning_object_normal.vectMult(newN * cos1 - cos2));
+			}
+			else
+			{
+				resultingRay = intersecting_ray_direction.vectMult(newN).vectAdd(winning_object_normal.vectMult(newN * cos1 + cos2));
+			}
+		}
+
+		Ray reflection_ray(intersection_position, resultingRay);
 
 		// determine what the ray intersects with first
 		vector<double> reflection_intersections;
@@ -110,17 +141,20 @@ Color getColorAt(Vect intersection_position, Vect intersecting_ray_direction, ve
 
 		if (index_of_winning_object_with_reflection != -1) {
 			// reflection ray missed everthing else
-			if (reflection_intersections.at(index_of_winning_object_with_reflection) > accuracy) {
+			//if (reflection_intersections.at(index_of_winning_object_with_reflection) > accuracy) {
 				// determine the position and direction at the point of intersection with the reflection ray
 				// the ray only affects the color if it reflected off something
 
-				Vect reflection_intersection_position = intersection_position.vectAdd(reflection_direction.vectMult(reflection_intersections.at(index_of_winning_object_with_reflection)));
-				Vect reflection_intersection_ray_direction = reflection_direction;
+				Vect reflection_intersection_position = intersection_position.vectAdd(resultingRay.vectMult(reflection_intersections.at(index_of_winning_object_with_reflection)));
+				Vect reflection_intersection_ray_direction = resultingRay;
 
 				Color reflection_intersection_color = getColorAt(reflection_intersection_position, reflection_intersection_ray_direction, scene_objects, index_of_winning_object_with_reflection, light_sources, accuracy, ambientlight);
 
-				final_color = final_color.colorAdd(reflection_intersection_color.colorScalar(winning_object_color.getColorSpecial()));
-			}
+				if (winning_object_color.getN() == 0)
+					final_color = final_color.colorAdd(reflection_intersection_color.colorScalar(winning_object_color.getColorSpecial()));
+				else
+					final_color = reflection_intersection_color;
+			//}
 		}
 	}
 
@@ -206,7 +240,7 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, Camera camera, int w, int
 	Vect Y(0, 1, 0);
 	Vect Z(0, 0, 1);
 
-	Vect new_sphere_location(1.75, -0.25, 0);
+	Vect new_sphere_location(1.5, 0, 0);
 
 	Vect campos(3, 1.5, -4);
 
@@ -218,12 +252,12 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, Camera camera, int w, int
 	Vect camdown = camright.crossProduct(camdir);
 	Camera scene_cam(campos, camdir, camright, camdown);
 
-	Color white_light(1.0, 1.0, 1.0, 0);
-	Color pretty_green(0.5, 1.0, 0.5, 0.3);
-	Color maroon(0.5, 0.25, 0.25, 0);
-	Color tile_floor(1, 1, 1, 2);
-	Color gray(0.5, 0.5, 0.5, 0);
-	Color black(0.0, 0.0, 0.0, 0);
+	Color white_light(1.0, 1.0, 1.0, 0, 0);
+	Color pretty_green(0.5, 1.0, 0.5, 0.3, 0);
+	Color maroon(0.5, 0.25, 0.25, 0.3, 1.47);
+	Color tile_floor(1, 1, 1, 2, 0);
+	Color gray(0.5, 0.5, 0.5, 0, 0);
+	Color black(0.0, 0.0, 0.0, 0, 0);
 
 	Vect light_position(-7, 10, -10);
 	Light scene_light(light_position, white_light);
@@ -233,11 +267,9 @@ Image* RayCasting::RenderScene(vector<Sphere> objects, Camera camera, int w, int
 	// scene objects
 	Sphere scene_sphere(O, 1, pretty_green);
 	Sphere scene_sphere2(new_sphere_location, 0.5, maroon);
-	//Plane scene_plane(Y, -1, tile_floor);
 	vector<Object*> scene_objects;
 	scene_objects.push_back(dynamic_cast<Object*>(&scene_sphere));
 	scene_objects.push_back(dynamic_cast<Object*>(&scene_sphere2));
-	//scene_objects.push_back(dynamic_cast<Object*>(&scene_plane));
 
 	int thisone, aa_index;
 	double xamnt, yamnt;
