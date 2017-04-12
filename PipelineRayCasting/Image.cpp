@@ -16,7 +16,7 @@ Image::~Image()
 
 void Image::saveImage(string fileName)
 {
-	/*FILE *file;
+	FILE *file;
 	int k = w*h;
 	int s = 4 * k;
 	int filesize = 54 + s;
@@ -76,7 +76,7 @@ void Image::saveImage(string fileName)
 		fwrite(color, 1, 3, file);
 	}
 
-	fclose(file);*/
+	fclose(file);
 }
 
 /*void Image::setPixel(Vec3 color, int width, int height)
