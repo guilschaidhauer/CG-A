@@ -111,27 +111,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="EntryProcessor.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageProcessor.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="OutputProcessor.cpp" />
     <ClCompile Include="ParamsFile.cpp" />
     <ClCompile Include="PNGProcessor.cpp" />
     <ClCompile Include="RayCasting.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="StandardEntryProcess.cpp" />
     <ClCompile Include="StandardOutputProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="EntryProcessor.h" />
+    <ClInclude Include="geometry.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageProcessor.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="OutputProcessor.h" />
     <ClInclude Include="ParamsFile.h" />
     <ClInclude Include="PNGProcessor.h" />
     <ClInclude Include="RayCasting.h" />
     <ClInclude Include="Render.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="StandardEntryProcess.h" />
     <ClInclude Include="StandardOutputProcessor.h" />
     <ClInclude Include="Structures.h" />

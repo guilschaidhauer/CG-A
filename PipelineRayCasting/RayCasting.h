@@ -10,6 +10,5 @@ public:
 	~RayCasting();
 
 	Image* RenderScene(/*vector<Sphere> objects, CameraDefinition camera,*/ int w, int h) override;
-
 };
 
