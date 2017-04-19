@@ -12,7 +12,7 @@ class Sphere : public Object {
 	  
    
 	Sphere ();
-	Sphere(const Vec3f &c, const double &r, const Color);// : radius(r), radius2(r *r ), center(c) {}
+	//Sphere(const Vec3f &c, const double &r, const Color);// : radius(r), radius2(r *r ), center(c) {}
 	 Sphere(
         const Vec3f &c,
         const float &r,
@@ -25,6 +25,8 @@ class Sphere : public Object {
 	// method functions
 	Vec3f getSphereCenter () { return center; }
 	double getSphereRadius () { return radius; }
+	void setCenter(Vec3f c) { center = c;}
+	void setColor(Vec3f c) { color.setColorRed(c.x);  color.setColorGreen(c.y); color.setColorBlue(c.z); }
 	virtual Color getColor () { return color; }
 	virtual bool intersect(const Vec3f &rayorig, const Vec3f &raydir, float &t0, float &t1) const ; 
 
@@ -82,8 +84,8 @@ private:
 
 		Vec3f center;
 		double radius, radius2;
+
 		Color color;
-	
 };
 
 #endif

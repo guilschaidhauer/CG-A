@@ -9,7 +9,7 @@ public:
 	RayCasting();
 	~RayCasting();
 
-	Image* RenderScene(/*vector<Sphere> objects, CameraDefinition camera,*/ int w, int h) override;
+	Image* RenderScene(vector<Object*> objects, Camera camera, int w, int h) override;
 
 	int MAX_DEPTH;
 };

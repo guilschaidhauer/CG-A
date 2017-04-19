@@ -231,7 +231,7 @@ void render(
 	delete[] framebuffer;
 }
 
-Image* RayCasting::RenderScene(/*vector<Sphere> objects, CameraDefinition camera,*/ int w, int h)
+Image* RayCasting::RenderScene(vector<Object*> objects, Camera camera, int w, int h)
 {
 	Image* image = new Image(w, h);
 
@@ -241,26 +241,30 @@ Image* RayCasting::RenderScene(/*vector<Sphere> objects, CameraDefinition camera
 	std::uniform_real_distribution<> dis(0, 1);
 
 	// creating the scene (adding objects and lights)
-	std::vector<Object*> objects;
+	//std::vector<Object*> objects;
 
 	// generate a scene made of random spheres
-	int numSpheres = 0;
+	/*int numSpheres = 0;
 	gen.seed(0);
 	for (int i = 0; i < numSpheres; ++i) {
 		Vec3f randPos((0.5 - dis(gen)) * 10, (0.5 - dis(gen)) * 10, (0.5 + dis(gen) * 10));
 		float randRadius = (0.5 + dis(gen) * 0.5);
 		objects.push_back(dynamic_cast<Object*>(new Sphere(randPos, randRadius, Vec3f(dis(gen), dis(gen), dis(gen)), 1, 0.5)));
 
-	}
-	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0)));
+	}*/
+
+
+	/*objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0)));
 	//objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 0, -20), 4, Vec3f(1.00, 0.32, 0.36), 1, 0.5)));
 	//objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0)));
 	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(-15.0, 0, -10), 5, Vec3f(0.5, 1, 0), 0, 0.5)));
 	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(10, 0, 10), 3, Vec3f(0, 0.8, 0.8), 0, 0.5)));
-	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0, 0, 0), 8, Vec3f(0, 0, 1), 1, 1.33)));
+	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0, 0, 0), 8, Vec3f(0, 0, 1), 1, 1.33)));*/
 
 	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
 	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));
+
+
 	int width = w, height = h;
 	// setting up options
 	/* Options options;

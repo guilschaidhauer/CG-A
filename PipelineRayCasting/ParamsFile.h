@@ -1,5 +1,8 @@
 #pragma once
 #include "Structures.h"
+#include "Camera.h"
+#include "Sphere.h"
+#include <vector>
 
 using namespace std;
 
@@ -9,10 +12,10 @@ public:
 	ParamsFile();
 	~ParamsFile();
 
-	/*CameraDefinition cameraDefinition;
-	LightPointDefinition lightPointDefinition;
-	vector<Sphere> objects;
-	PostRenderFilter postRenderFilter;
-	Output output;*/
+	Camera cameraDefinition;
+	Sphere lightPointDefinition;
+	vector<Object*> objects;
+	//PostRenderFilter postRenderFilter;
+	int width, height;
 };
 

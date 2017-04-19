@@ -24,6 +24,6 @@ public:
 	Render();
 	~Render();
 
-	virtual Image* RenderScene(/*vector<Sphere> objects, CameraDefinition camera,*/ int w, int h) = 0;
+	virtual Image* RenderScene(vector<Object*> objects, Camera camera, int w, int h) = 0;
 };
 

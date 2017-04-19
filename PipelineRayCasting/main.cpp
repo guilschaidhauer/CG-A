@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ParamsFile.h"
+#include "paramsFile->h"
 #include "RayCasting.h"
 #include "PNGProcessor.h"
 #include "StandardOutputProcessor.h"
@@ -36,12 +36,14 @@ void init()
 
 void processEntry(ParamsFile paramsFile) 
 {
-	myEntryPocessor->processEntry(paramsFile);
+	myParamsFile = myEntryPocessor->processEntry(paramsFile);
+	cout << myparamsFile->objects.at(0);
 }
 
-void processRender(/*vector<Sphere> objects, CameraDefinition camera,*/ float w, float h)
+void processRender()
 {
-	image = myRender->RenderScene(/*objects, camera,*/ w, h);
+	cout << myparamsFile->objects.at(0);
+	image = myRender->RenderScene(myparamsFile->objects, myparamsFile->cameraDefinition, myparamsFile->width, myparamsFile->height);
 }
 
 void processImage()
@@ -64,7 +66,7 @@ int main(int argc, char** argv)
 	//Add configs from file to myParamsFile
 
 	//Render Scene
-	processRender(640, 480);
+	processRender();
 
 	//Add filter
 	processImage();

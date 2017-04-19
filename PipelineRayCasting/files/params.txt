@@ -1,0 +1,51 @@
+# Definições 1º estágio
+begin stage 1
+ # Câmera
+ cam: 0.0 0.0 0.0
+ # Pontos de luz
+ nlight 1
+ begin light
+ position: 0 20 10
+ color: 0 0 0
+ end light
+ # definição de objetos
+ nobjects 1
+ # pode ser primitivas...
+ begin sphere
+ raio: 2 2 2
+ color: 1.0 1.0 0
+ position: 5.0 -1 -15
+ refraction: 0
+ diffuse: 0.4 0.4 0.4
+ end
+ # ... ou pode ser um obj (opcional)
+ begin obj
+ file: mesa.obj
+ position: tx ty tz
+ refraction: 0
+ end
+end stage 1
+# Definições 3º estágio
+begin stage 3
+ # define algoritmo de render:
+ # rc (ray cast) ou rt (ray tracing)
+ program: rc
+end stage 3
+# Definições 4º estágio
+begin stage 4
+ # define filtros para pós-render
+ nfilter 2
+ begin blur
+ level: 0
+ type: r
+ end
+ begin sharpen
+ level: 0
+ type: r
+ end
+end stage 4
+# Definições 5º estágio
+begin stage 5
+ # define saída do software tela (s) ou arquivo (f)
+ output: 640 480 f
+end stage 5

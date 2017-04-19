@@ -19,6 +19,8 @@ class Camera {
 	//Vect getCameraRight () { return camright; }
 	//Vect getCameraDown () { return camdown; }
 
+	Vec3f position;
+
 private:
 	Matrix44f camToWorld;
 	double fov;

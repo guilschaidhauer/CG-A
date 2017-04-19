@@ -7,6 +7,6 @@ public:
 	StandardEntryProcess();
 	~StandardEntryProcess();
 
-	void processEntry(ParamsFile paramsFile) override;	
+	ParamsFile processEntry(ParamsFile *paramsFile) override;
 };
 

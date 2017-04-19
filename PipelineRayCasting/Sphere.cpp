@@ -24,12 +24,12 @@ Sphere::Sphere(
 		reflection = (refl);
 }
 
-Sphere::Sphere(const Vec3f &c, const double &r, const Color colorValue) {
+/*Sphere::Sphere(const Vec3f &c, const double &r, const Color colorValue) {
 	center = c;
 	radius = r;
 	color = colorValue;
 	radius2 = r*r;
-}
+}*/
 
 void Sphere::getSurfaceData(const Vec3f &Phit, Vec3f &Nhit, Vec2f &tex) const{
 		//PHIT - hit point
