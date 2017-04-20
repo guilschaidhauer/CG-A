@@ -116,6 +116,7 @@
     <ClCompile Include="EntryProcessor.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageProcessor.cpp" />
+    <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="OutputProcessor.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="geometry.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageProcessor.h" />
+    <ClInclude Include="lodepng.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="OutputProcessor.h" />
     <ClInclude Include="ParamsFile.h" />

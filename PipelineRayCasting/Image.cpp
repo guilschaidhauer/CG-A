@@ -1,6 +1,23 @@
 #include "Image.h"
 
+ImagePNG::ImagePNG(int width, int height)
+{
+	w = width;
+	h = height;
+	pixels.resize(width * height * 4);
+}
 
+void ImagePNG::saveImage(string fileName)
+{
+	std::vector<unsigned char> png;
+	unsigned error = lodepng::encode(png, pixels, w, h);
+	if (!error) lodepng::save_file(png, fileName);
+}
+
+
+ImagePNG::~ImagePNG()
+{
+}
 
 Image::Image(int width, int height)
 {

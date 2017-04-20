@@ -210,26 +210,28 @@ void render(
 			camera.cameraToWorld().multDirMatrix(Vec3f(x, y, -1), dir);
 			dir.normalize();
 			*(pix++) = castRay(orig, dir, objects);
-			fprintf(stderr, "\r%3d%c", int(j / (float)h * 100), '%');
+			//fprintf(stderr, "\r%3d%c", int(j / (float)h * 100), '%');
 		}
 	}
+	ImagePNG* png_image = new ImagePNG(w, h);
 
-	int size = h * w;
-	for (uint32_t i = 0; i < size; ++i) {
-		char r = (char)(255 * clamp(0, 1, framebuffer[i].x));
-		char g = (char)(255 * clamp(0, 1, framebuffer[i].y));
-		char b = (char)(255 * clamp(0, 1, framebuffer[i].z));
-
-		RGBType tempColor;
-		tempColor.r = r;
-		tempColor.g = g;
-		tempColor.b = b;
-
-		image->pixels[size - i] = tempColor;
+	for (int x = 0; x < w; ++x) {
+		for (int y = 0; y < h; ++y) {
+			int index = 4 * w * y + 4 * x;
+			char r = (char)(255 * clamp(0, 1, framebuffer[x + y*w].x));
+			char g = (char)(255 * clamp(0, 1, framebuffer[x + y*w].y));
+			char b = (char)(255 * clamp(0, 1, framebuffer[x + y*w].z));
+			png_image->pixels[index + 0] = r;
+			png_image->pixels[index + 1] = g;
+			png_image->pixels[index + 2] = b;
+			png_image->pixels[index + 3] = 255;
+		}
 	}
+	png_image->saveImage("output.png");
 
 	delete[] framebuffer;
 }
+
 
 Image* RayCasting::RenderScene(/*vector<Sphere> objects, CameraDefinition camera,*/ int w, int h)
 {
