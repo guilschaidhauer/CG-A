@@ -21,23 +21,23 @@ public:
 	~Image();
 
 	void saveImage(string fileName);
-	RGBType *pixels;
-
+	//RGBType *pixels;
+	std::vector<unsigned char> pixels;
 	int w;
 	int h;
 	int dpi;
 };
 
-class ImagePNG
-{
-public:
-	ImagePNG(int width, int height);
-	~ImagePNG();
-
-	void saveImage(string fileName);
-	//RGBType *pixels;
-	std::vector<unsigned char> pixels;
-	int w;
-	int h;
-	//int dpi;
-};
+//class ImagePNG
+//{
+//public:
+//	ImagePNG(int width, int height);
+//	~ImagePNG();
+//
+//	void saveImage(string fileName);
+//	//RGBType *pixels;
+//	std::vector<unsigned char> pixels;
+//	int w;
+//	int h;
+//	//int dpi;
+//};

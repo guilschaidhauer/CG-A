@@ -213,7 +213,7 @@ void render(
 			//fprintf(stderr, "\r%3d%c", int(j / (float)h * 100), '%');
 		}
 	}
-	ImagePNG* png_image = new ImagePNG(w, h);
+	//ImagePNG* png_image = new ImagePNG(w, h);
 
 	for (int x = 0; x < w; ++x) {
 		for (int y = 0; y < h; ++y) {
@@ -221,13 +221,13 @@ void render(
 			char r = (char)(255 * clamp(0, 1, framebuffer[x + y*w].x));
 			char g = (char)(255 * clamp(0, 1, framebuffer[x + y*w].y));
 			char b = (char)(255 * clamp(0, 1, framebuffer[x + y*w].z));
-			png_image->pixels[index + 0] = r;
-			png_image->pixels[index + 1] = g;
-			png_image->pixels[index + 2] = b;
-			png_image->pixels[index + 3] = 255;
+			image->pixels[index + 0] = r;
+			image->pixels[index + 1] = g;
+			image->pixels[index + 2] = b;
+			image->pixels[index + 3] = 255;
 		}
 	}
-	png_image->saveImage("output.png");
+	//png_image->saveImage("output.png");
 
 	delete[] framebuffer;
 }
