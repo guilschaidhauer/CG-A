@@ -9,12 +9,19 @@ begin stage 1
  color: 0 0 0
  end light
  # definição de objetos
- nobjects 1
+ nobjects 2
  # pode ser primitivas...
  begin sphere
- raio: 2 2 2
- color: 1.0 1.0 0
- position: 5.0 -1 -15
+ raio: 5 5 5
+ color: 0.5 0.5 0
+ position: 0 0 0
+ refraction: 0
+ diffuse: 0.4 0.4 0.4
+ end
+ begin sphere
+ raio: 3 3 3 
+ color: 1 0 0
+ position: 10 0.0 10
  refraction: 0
  diffuse: 0.4 0.4 0.4
  end

@@ -79,7 +79,7 @@ ParamsFile StandardEntryProcess::processEntry(ParamsFile *paramsFile)
 				getline(file, line); //descarta a linha
 				getline(file, line); //descarta a linha
 				cout << "Configuring the primitives..." << endl;
-				for (int i = 1; i <= nObjects; i++)
+				for (int i = 0; i < nObjects; i++)
 				{
 					getline(file, line); //descarta a linha
 					cout << line << i << endl;
@@ -94,9 +94,10 @@ ParamsFile StandardEntryProcess::processEntry(ParamsFile *paramsFile)
 					file >> ReadingParam >> pos.x >> pos.y >> pos.z;
 					cout << ReadingParam << " " << pos.x << ", " << pos.y << ", " << pos.z << endl;
 
-					Sphere newSphere(Vec3f(pos.x, pos.y, pos.z), raio, color);
-					newSphere.setColor(color);
-					paramsFile->objects.push_back(dynamic_cast<Object*>(&newSphere));
+					//Sphere newSphere(Vec3f(pos.x, pos.y, pos.z), raio, color);
+					//newSphere.setColor(color);
+					//paramsFile->objects.push_back(dynamic_cast<Object*>(&newSphere));
+					paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(pos.x, pos.y, pos.z), raio, color, 1, 1.33)));
 
 					getline(file, line); //descarta a linha
 				}
@@ -127,5 +128,5 @@ ParamsFile StandardEntryProcess::processEntry(ParamsFile *paramsFile)
 		}
 	}
 
-	return paramsFile;
+	return *paramsFile;
 }

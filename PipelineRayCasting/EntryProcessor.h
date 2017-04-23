@@ -1,5 +1,5 @@
 #pragma once
-#include "paramsFile->h"
+#include "ParamsFile.h"
 #include <fstream>
 
 using namespace std;

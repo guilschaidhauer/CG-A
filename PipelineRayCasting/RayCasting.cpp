@@ -210,7 +210,7 @@ void render(
 			camera.cameraToWorld().multDirMatrix(Vec3f(x, y, -1), dir);
 			dir.normalize();
 			*(pix++) = castRay(orig, dir, objects);
-			fprintf(stderr, "\r%3d%c", int(j / (float)h * 100), '%');
+			//fprintf(stderr, "\r%3d%c", int(j / (float)h * 100), '%');
 		}
 	}
 
@@ -259,10 +259,10 @@ Image* RayCasting::RenderScene(vector<Object*> objects, Camera camera, int w, in
 	//objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0)));
 	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(-15.0, 0, -10), 5, Vec3f(0.5, 1, 0), 0, 0.5)));
 	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(10, 0, 10), 3, Vec3f(0, 0.8, 0.8), 0, 0.5)));
-	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0, 0, 0), 8, Vec3f(0, 0, 1), 1, 1.33)));*/
+	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0, 0, 0), 8, Vec3f(0, 0, 1), 1, 1.33)));
 
 	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
-	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));
+	objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));*/
 
 
 	int width = w, height = h;
@@ -278,7 +278,8 @@ Image* RayCasting::RenderScene(vector<Object*> objects, Camera camera, int w, in
 	//m.multVecMatrix(Vec3f(0, 10, 20), Vec3f(1,1,1));
 	Camera myCam(m, fov);
 	// finally, render
-	render(objects, myCam, width, height, image);
+	//render(objects, myCam, width, height, image);
+	render(objects, camera, width, height, image);
 
 	return image;
 }
