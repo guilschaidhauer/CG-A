@@ -308,6 +308,13 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 
 			}
 		}
+		else if (word == "output:") {
+			float w, h;
+			fileLine >> w;
+			fileLine >> h;
+			paramsFile->width = w;
+			paramsFile->height = h;
+		}
 	}
 
 	return *paramsFile;

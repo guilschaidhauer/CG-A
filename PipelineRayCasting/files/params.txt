@@ -1,7 +1,7 @@
 # Definições 1º estágio
 begin stage 1
  # Câmera
- cam: 0.0 0.0 -1.0
+ cam: 0.0 0.0 -4.0
  fov: 60
  target: 0.0 0.0 0.0
  # Pontos de luz
@@ -60,5 +60,5 @@ end stage 4
 # Definições 5º estágio
 begin stage 5
 # define saída do software tela (s) ou arquivo (f)
- output: 640 480 f
+ output: 500 500 f
 end stage 5

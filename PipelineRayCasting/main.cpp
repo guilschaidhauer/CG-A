@@ -99,6 +99,14 @@ void processEntry(ParamsFile paramsFile)
 	ParamsFile newParams;
 	myEntryPocessor->processEntry2(&newParams);
 	myParamsFile.objects = newParams.objects;
+
+	Camera myCam(lookAt(newParams.cameraDefinition.position, newParams.cameraDefinition.getTarget(), Vec3f(0, -1, 0)), newParams.cameraDefinition.FOV());
+
+	//Camera myCam(lookAt(pos, /*pos + */target, Vec3f(0, -1, 0)), fov);
+	myParamsFile.cameraDefinition = myCam;
+	myParamsFile.width = newParams.width;
+	myParamsFile.height = newParams.height;
+
 	//cout << myparamsFile.objects.at(0);
 }
 

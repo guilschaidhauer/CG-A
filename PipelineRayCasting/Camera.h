@@ -13,6 +13,7 @@ class Camera {
 	//Camera (Vect, Vect, Vect, Vect);
 	Matrix44f cameraToWorld(){return camToWorld;}
 	double FOV(){return fov;}
+	Vec3f getTarget(){ return target;}
 	void setFOV(double newFOV) { fov = newFOV; }
 	void setTarget(Vec3f newTarget) { target = newTarget; }
 	// method functions
