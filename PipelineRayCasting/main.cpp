@@ -47,12 +47,9 @@ Matrix44f lookAt(Vec3f pos, Vec3f target, Vec3f up)
 
 void defineParams()
 {
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0)));
 	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 0.0, 0.0), 0.8, Vec3f(0.0, 0.8, 0.0), 0, 0.5)));
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(-2, 0.0, 0.0), 0.8, Vec3f(0.8, 0.0, 0.0), 0, 0.5)));
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(2, 0.0, 0.0), 0.8, Vec3f(0.0, 0.0, 0.8), 0, 0.5)));
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(10, 0, 10), 3, Vec3f(1, 0, 0), 0, 0.5)));
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0, 0, 0), 1, Vec3f(0, 0, 1), 1, 1.33)));
+	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(-2, 0.0, 0.0), 0.8, Vec3f(0.8, 0.0, 0.0), 0, 0.5)));
+	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(2, 0.0, 0.0), 0.8, Vec3f(0.0, 0.0, 0.8), 0, 0.5)));
 
 	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
 	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));
@@ -65,8 +62,8 @@ void defineParams()
 	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(-15.0, 0, -10), 5, Vec3f(0.5, 0.5, 0), 1, 1.33)));
 
 
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));
+	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
+	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));
 
 
 	double fov = 60;
@@ -99,7 +96,9 @@ void init()
 
 void processEntry(ParamsFile paramsFile) 
 {
-	//myParamsFile = myEntryPocessor->processEntry(&paramsFile);
+	ParamsFile newParams;
+	myEntryPocessor->processEntry2(&newParams);
+	myParamsFile.objects = newParams.objects;
 	//cout << myparamsFile.objects.at(0);
 }
 

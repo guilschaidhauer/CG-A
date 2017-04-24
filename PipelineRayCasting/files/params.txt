@@ -1,7 +1,9 @@
 # Definições 1º estágio
 begin stage 1
  # Câmera
- cam: 0.0 0.0 0.0
+ cam: 0.0 0.0 -1.0
+ fov: 60
+ target: 0.0 0.0 0.0
  # Pontos de luz
  nlight 1
  begin light
@@ -9,27 +11,31 @@ begin stage 1
  color: 0 0 0
  end light
  # definição de objetos
- nobjects 2
+ nobjects 3
  # pode ser primitivas...
  begin sphere
- raio: 5 5 5
- color: 0.5 0.5 0
+ raio: 0.8 0.8 0.8
+ color: 0.0 0.8 0.0
  position: 0 0 0
  refraction: 0
- diffuse: 0.4 0.4 0.4
+ transparency: 0.5
+ emission: 0.4 0.4 0.4
  end
  begin sphere
- raio: 3 3 3 
- color: 1 0 0
- position: 10 0.0 10
+ raio: 0.8 0.8 0.8
+ color: 0.8 0.0 0.0
+ position: -2.0 0 0
  refraction: 0
- diffuse: 0.4 0.4 0.4
+ transparency: 0.5
+ emission: 0.4 0.4 0.4
  end
- # ... ou pode ser um obj (opcional)
- begin obj
- file: mesa.obj
- position: tx ty tz
+ begin sphere
+ raio: 0.8 0.8 0.8
+ color: 0.0 0.0 0.8
+ position: 2.0 0 0
  refraction: 0
+ transparency: 0.5
+ emission: 0.4 0.4 0.4
  end
 end stage 1
 # Definições 3º estágio
@@ -53,6 +59,6 @@ begin stage 4
 end stage 4
 # Definições 5º estágio
 begin stage 5
- # define saída do software tela (s) ou arquivo (f)
+# define saída do software tela (s) ou arquivo (f)
  output: 640 480 f
 end stage 5
