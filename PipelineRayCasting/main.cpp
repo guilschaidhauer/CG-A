@@ -74,12 +74,13 @@ void defineParams()
 	//target = target - pos;
 	//target = target.normalize();
 
-	Camera myCam(lookAt(pos, /*pos + */target, Vec3f(0, -1, 0)), fov);
+	Camera myCam(lookAt(pos, /*pos + */target, Vec3f(0, 1, 0)), fov);
 
 	myParamsFile.cameraDefinition = myCam;
 
 	myParamsFile.width = 640;
 	myParamsFile.height = 480;
+
 }
 
 void init()
@@ -100,7 +101,7 @@ void processEntry(ParamsFile paramsFile)
 	myEntryPocessor->processEntry2(&newParams);
 	myParamsFile.objects = newParams.objects;
 
-	Camera myCam(lookAt(newParams.cameraDefinition.position, newParams.cameraDefinition.getTarget(), Vec3f(0, -1, 0)), newParams.cameraDefinition.FOV());
+	Camera myCam(lookAt(newParams.cameraDefinition.position, newParams.cameraDefinition.getTarget(), Vec3f(0, 1, 0)), newParams.cameraDefinition.FOV());
 
 	//Camera myCam(lookAt(pos, /*pos + */target, Vec3f(0, -1, 0)), fov);
 	myParamsFile.cameraDefinition = myCam;

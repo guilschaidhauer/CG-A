@@ -225,7 +225,7 @@ void render(
 		tempColor.g = g;
 		tempColor.b = b;
 
-		image->pixels[i] = tempColor;
+		image->pixels[size - i] = tempColor;
 	}
 
 	delete[] framebuffer;

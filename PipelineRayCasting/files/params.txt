@@ -16,7 +16,7 @@ begin stage 1
  begin sphere
  raio: 0.8 0.8 0.8
  color: 0.0 0.8 0.0
- position: 0 0 0
+ position: 0 -1 0
  refraction: 0
  transparency: 0.5
  emission: 0.4 0.4 0.4
