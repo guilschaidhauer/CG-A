@@ -7,7 +7,7 @@ public:
 	ImageProcessor();
 	~ImageProcessor();
 
-	virtual void processImage(Image* image) = 0;
+	//virtual void processImage(Image* image) = 0;
 
 protected:
 	Image* currentImage;

@@ -4,6 +4,7 @@
 
 PNGProcessor::PNGProcessor()
 {
+	originalImage = NULL;
 }
 
 
@@ -11,19 +12,64 @@ PNGProcessor::~PNGProcessor()
 {
 }
 
-void PNGProcessor::processImage(Image* image)
+void PNGProcessor::processImage(int type,Image* image)
 {
-	currentImage = image;
-	grayScale();
-	image = currentImage;
+	if (originalImage == NULL) {
+		setOriginal(image);
+		//originalImage->pixels = 
+			//memcpy(&originalImage->pixels, &image->pixels,sizeof(unsigned char)image->pixels));
+	}
+
+	//_sharpen.applyFilter(image);
+
+
+	switch (type)
+	{
+	case PNGProcessor::SHARPEN:
+		_sharpen.doIt(image);
+		break;
+	case PNGProcessor::ORIGINAL:
+		getOriginal(image);
+		break;
+	case PNGProcessor::BLUR:
+		_blur.doIt(image);
+		break;
+	case PNGProcessor::EDGE:
+		_edge.doIt(image);
+		break;
+	case PNGProcessor::GRAY:
+		grayScale(image);
+		break;
+	default:
+		break;
+	}
+
 }
 
-void PNGProcessor::grayScale() {
-	std::vector<unsigned char> grayimage = currentImage->pixels;
-	for (int x = 0; x < (int)currentImage->w; x++) {
-		for (int y = 0; y < (int)currentImage->h; y++) {
+void PNGProcessor::getOriginal(Image* image) {
+	image->pixels = originalImage->pixels;
+
+}
+
+void PNGProcessor::setOriginal(Image* image) {
+	//originalImage->pixels = image->pixels;
+	//for (int x = 0; x < (int)image->w; x++) {
+	//	for (int y = 0; y < (int)image->h; y++) {
+	//		int index = 4 * image->w * y + 4 * x;
+	//		originalImage->pixels[index] = image->pixels[index];
+	//		//originalImage->pixels[index + 1] = image->pixels[index + 1];
+	//		//originalImage->pixels[index + 2] = image->pixels[index + 2];
+	//		//originalImage->pixels[index + 3] = image->pixels[index + 3];
+	//	}
+	//}
+}
+
+void PNGProcessor::grayScale(Image* image) {
+	std::vector<unsigned char> grayimage = image->pixels;
+	for (int x = 0; x < (int)image->w; x++) {
+		for (int y = 0; y < (int)image->h; y++) {
 			Color color;
-			int index = 4 * currentImage->w * y + 4 * x;
+			int index = 4 * image->w * y + 4 * x;
 			color.setColorRed((int)grayimage[index + 0]);
 			color.setColorGreen((int)grayimage[index + 1]);
 			color.setColorBlue((int)grayimage[index + 2]);
@@ -38,6 +84,5 @@ void PNGProcessor::grayScale() {
 			grayimage[index + 3] = 255;
 		}
 	}
-	currentImage->pixels = grayimage;
-//	currentimage = grayimage;
+	image->pixels = grayimage;
 }

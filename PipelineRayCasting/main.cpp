@@ -13,7 +13,7 @@ using namespace std;
 ParamsFile myParamsFile;
 Image *image;
 Render *myRender;
-ImageProcessor *myImageProcessor;
+PNGProcessor *myImageProcessor;
 OutputProcessor *myOutputProcessor;
 EntryProcessor *myEntryPocessor;
 
@@ -56,9 +56,9 @@ void processRender(/*vector<Sphere> objects, CameraDefinition camera,*/ float w,
 	image = myRender->RenderScene(/*objects, camera,*/ w, h);
 }
 
-void processImage()
+void processImage(int filterType)
 {
-	myImageProcessor->processImage(image);
+	myImageProcessor->processImage(filterType, image);
 }
 
 void processOutput(string fileName)
@@ -85,7 +85,7 @@ void keyboard(unsigned char key, int x, int y) {
 	}
 	if ('g' == key) {
 		//grey filter
-		processImage();
+		//processImage();
 	}
 	if ('s' == key) {
 		//save
@@ -94,6 +94,39 @@ void keyboard(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 
 }
+
+enum MENU_TYPE
+{
+	SHARPEN,
+	ORIGINAL,
+	BLUR,
+	EDGE,
+	GREYSCALE,
+	QUIT,
+};
+
+void menu(int item)
+{
+	switch (item)
+	{
+	case MENU_TYPE::QUIT:
+	{
+		exit(0);
+	}
+	break;
+	default:
+	{     
+		processImage(item);
+	}
+	break;
+	}
+
+	glutPostRedisplay();
+
+	return;
+}
+
+
 
 int main(int argc, char** argv)
 {
@@ -118,6 +151,25 @@ int main(int argc, char** argv)
 	init();
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
+
+
+
+	// Create a menu
+	glutCreateMenu(menu);
+
+	// Add menu items
+	glutAddMenuEntry("Sharpen", SHARPEN);
+	glutAddMenuEntry("Original", ORIGINAL);
+	glutAddMenuEntry("Blur", BLUR);
+	glutAddMenuEntry("Edge", EDGE);
+	glutAddMenuEntry("Grey Scale", GREYSCALE);
+	glutAddMenuEntry("Quit", QUIT);
+
+
+	// Associate a mouse button with menu
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+
 	//glutMouseFunc(mouse);
 	glutMainLoop();
 

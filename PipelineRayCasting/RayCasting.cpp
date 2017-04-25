@@ -1,6 +1,6 @@
 #include "RayCasting.h"
 
-
+float MAX_DEPTH = 3;
 
 RayCasting::RayCasting()
 {
@@ -30,12 +30,36 @@ float mix(const float &a, const float &b, const float &mix)
 	return b * mix + a * (1 - mix);
 }
 
+void fresnel(const Vec3f &I, const Vec3f &N, const float &ior, float &kr)
+{
+	float cosi = clamp(-1, 1, I.dotProduct(N));
+	float etai = 1, etat = ior;
+	if (cosi > 0) { std::swap(etai, etat); }
+	// Compute sini using Snell's law
+	float sint = etai / etat * sqrtf(max(0.f, 1 - cosi * cosi));
+	// Total internal reflection
+	if (sint >= 1) {
+		kr = 1;
+	}
+	else {
+		float cost = sqrtf(max(0.f, 1 - sint * sint));
+		cosi = fabsf(cosi);
+		float Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost));
+		float Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost));
+		kr = (Rs * Rs + Rp * Rp) / 2;
+	}
+	// As a consequence of the conservation of energy, transmittance is given by:
+	// kt = 1 - kr;
+}
+
 Vec3f trace(
 	const Vec3f &rayorig,
 	const Vec3f &raydir,
 	const std::vector<Object*> objects,
 	const int &depth)
 {
+
+	Vec3f background_color = Vec3f(1,1,1);
 	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
 	Object* sphere = nullptr;
@@ -52,38 +76,44 @@ Vec3f trace(
 	}
 	// if there's no intersection return black or background color
 
-	if (!sphere) return Vec3f(2);
+	if (!sphere) 
+		return background_color;
+
 	Vec3f surfaceColor = 0; // color of the ray/surfaceof the object intersected by the ray
-	Vec3f phit = rayorig + raydir * tnear; // point of intersection
-	Vec3f nhit;
+	Vec3f intersection = rayorig + raydir * tnear; // point of intersection
+	Vec3f normal;
 	Vec2f tex;
-	sphere->getSurfaceData(phit, nhit, tex); // normal at the intersection point
-	nhit.normalize(); // normalize normal direction
+	sphere->getSurfaceData(intersection, normal, tex); // normal at the intersection point
+	normal.normalize(); // normalize normal direction
 					  // If the normal and the view direction are not opposite to each other
 					  // reverse the normal direction. That also means we are inside the sphere so set
 					  // the inside bool to true. Finally reverse the sign of IdotN which we want
 					  // positive.
-	float bias = 1e-4; // add some bias to the point from which we will be tracing
+	float bias = 0.01;//1e-4; // add some bias to the point from which we will be tracing
 	bool inside = false;
-	if (raydir.dotProduct(nhit) > 0) nhit = -nhit, inside = true;
-	if ((sphere->transparency > 0 || sphere->reflection > 0) && depth < 3/*TODO USE MAX DEPTH INSTEAD*/) {
-		float facingratio = -raydir.dotProduct(nhit);
+	if (raydir.dotProduct(normal) > 0) {
+		normal = -normal, inside = true;
+	}
+	
+	if ((sphere->transparency > 0 || sphere->reflection > 0) && depth < MAX_DEPTH) {
+		float facingratio = -raydir.dotProduct(normal);
 		// change the mix value to tweak the effect
 		float fresneleffect = mix(pow(1 - facingratio, 3), 1, 0.1);
+		//fresnel(intersection, normal, 1.3, fresneleffect);
 		// compute reflection direction (not need to normalize because all vectors
 		// are already normalized)
-		Vec3f refldir = raydir - nhit * 2 * raydir.dotProduct(nhit);
+		Vec3f refldir = raydir - normal * 2 * raydir.dotProduct(normal);
 		refldir.normalize();
-		Vec3f reflection = trace(phit + nhit * bias, refldir, objects, depth + 1);
+		Vec3f reflection = trace(intersection + normal * bias, refldir, objects, depth + 1);
 		Vec3f refraction = 0;
 		// if the sphere is also transparent compute refraction ray (transmission)
 		if (sphere->transparency) {
 			float ior = 1.1, eta = (inside) ? ior : 1 / ior; // are we inside or outside the surface?
-			float cosi = -nhit.dotProduct(raydir);
+			float cosi = -normal.dotProduct(raydir);
 			float k = 1 - eta * eta * (1 - cosi * cosi);
-			Vec3f refrdir = raydir * eta + nhit * (eta *  cosi - sqrt(k));
+			Vec3f refrdir = raydir * eta + normal * (eta *  cosi - sqrt(k));
 			refrdir.normalize();
-			refraction = trace(phit - nhit * bias, refrdir, objects, depth + 1);
+			refraction = trace(intersection - normal * bias, refrdir, objects, depth + 1);
 		}
 		// the result is a mix of reflection and refraction (if the sphere is transparent)
 		surfaceColor = (
@@ -96,12 +126,12 @@ Vec3f trace(
 			if (objects[i]->emissionColor.x > 0) {
 				// this is a light
 				Vec3f transmission = 1;
-				Vec3f lightDirection = dynamic_cast<Sphere*> (objects[i])->getSphereCenter() - phit;
+				Vec3f lightDirection = dynamic_cast<Sphere*> (objects[i])->getSphereCenter() - intersection;
 				lightDirection.normalize();
 				for (unsigned j = 0; j < objects.size(); ++j) {
 					if (i != j) {
 						float t0, t1;
-						if (objects[j]->intersect(phit + nhit * bias, lightDirection, t0, t1)) {
+						if (objects[j]->intersect(intersection + normal * bias, lightDirection, t0, t1)) {
 							transmission = 0;
 							break;
 						}
@@ -111,7 +141,7 @@ Vec3f trace(
 				//temp.doSum(sphere->surfaceColor * transmission *
 				//	max(float(0), nhit.dotProduct(lightDirection)) * objects[i]->emissionColor);
 				surfaceColor = surfaceColor + (sphere->surfaceColor * transmission *
-					max(float(0), nhit.dotProduct(lightDirection)) * objects[i]->emissionColor);
+					max(float(0), normal.dotProduct(lightDirection)) * objects[i]->emissionColor);
 				//surfaceColor += (sphere->surfaceColor * transmission *
 				//	max(float(0), nhit.dotProduct(lightDirection)) * objects[i]->emissionColor);
 			}
@@ -127,20 +157,6 @@ Vec3f castRay(
 {
 	Vec3f hitColor = 0;
 	const Object *hitObject = nullptr; // this is a pointer to the hit object
-	float t; // this is the intersection distance from the ray origin to the hit point
-			 //if (TTrace(orig, dir, objects, t, hitObject)) {
-			 //       Vec3f Phit = orig + dir * t;
-			 //       Vec3f Nhit;
-			 //       Vec2f tex;
-			 //       hitObject->getSurfaceData(Phit, Nhit, tex);
-			 //        //Use the normal and texture coordinates to shade the hit point.
-			 //        //The normal is used to compute a simple facing ratio and the texture coordinate
-			 //        //to compute a basic checker board pattern
-			 //       float scale = 4;
-			 //       float pattern = (fmodf(tex.x * scale, 1) > 0.5) ^ (fmodf(tex.y * scale, 1) > 0.5);
-			 //	hitColor = max(0.f, Nhit.dotProduct(-dir)) * mix(hitObject->getColor(), hitObject->getColor() * 0.8, pattern);
-			 //   }
-
 	return trace(orig, dir, objects, 0);
 }
 
@@ -151,61 +167,15 @@ void render(
 	Vec3f *pix = framebuffer;
 	float scale = tan(deg2rad(camera.FOV() * 0.5));
 	float imageAspectRatio = w / (float)h;
-	// [comment]
-	// Don't forget to transform the ray origin (which is also the camera origin
-	// by transforming the point with coordinates (0,0,0) to world-space using the
-	// camera-to-world matrix.
-	// [/comment]
 	Vec3f orig;
 	camera.cameraToWorld().multVecMatrix(Vec3f(0, 0, 10), orig);
 	Vec3f value = 0;
 	for (int j = 0; j < h; ++j) {
 		for (int i = 0; i < w; ++i) {
-
-			//
-			//	for (float fragmenty = h; fragmenty < h + 1.0f; fragmenty += 0.5f)
-			//		for (float fragmentx = w; fragmentx < w + 1.0f; fragmentx += 0.5f) {
-			//	{
-			//			//	fragmenty = fragmenty > h ? h : fragmenty;
-			//				//fragmentx = fragmentx > w ? w : fragmentx;
-			//		float x = (2 * (fragmenty + 0.5) / (float)w - 1) * imageAspectRatio * scale;
-			//		float y = (1 - 2 * (fragmentx + 0.5) / (float)h) * scale;
-			//		// [comment]
-			//		// Don't forget to transform the ray direction using the camera-to-world matrix.
-			//		// [/comment]
-			//		Vec3f dir;
-			//		camera.cameraToWorld().multDirMatrix(Vec3f(x, y, -1), dir);
-			//		dir.normalize();
-			//		
-			//		value = value + castRay(orig, dir, objects);
-			//		
-
-			//	}
-			//}
-			//	*(pix++) = value;
-			//	value = 0;
-
-			// [comment]
-			// Generate primary ray direction. Compute the x and y position
-			// of the ray in screen space. This gives a point on the image plane
-			// at z=1. From there, we simply compute the direction by normalized
-			// the resulting vec3f variable. This is similar to taking the vector
-			// between the point on the image plane and the camera origin, which
-			// in camera space is (0,0,0):
-			//
-			// ray.dir = normalize(Vec3f(x,y,-1) - Vec3f(0));
-			// [/comment]
-#ifdef MAYA_STYLE
-			float x = (2 * (i + 0.5) / (float)options.width - 1) * scale;
-			float y = (1 - 2 * (j + 0.5) / (float)options.height) * scale * 1 / imageAspectRatio;
-#else
-
 			float x = (2 * (i + 0.5) / (float)w - 1) * imageAspectRatio * scale;
 			float y = (1 - 2 * (j + 0.5) / (float)h) * scale;
-#endif
-			// [comment]
-			// Don't forget to transform the ray direction using the camera-to-world matrix.
-			// [/comment]
+
+
 			Vec3f dir;
 			camera.cameraToWorld().multDirMatrix(Vec3f(x, y, -1), dir);
 			dir.normalize();
@@ -213,7 +183,6 @@ void render(
 			//fprintf(stderr, "\r%3d%c", int(j / (float)h * 100), '%');
 		}
 	}
-	//ImagePNG* png_image = new ImagePNG(w, h);
 
 	for (int x = 0; x < w; ++x) {
 		for (int y = 0; y < h; ++y) {
@@ -227,7 +196,6 @@ void render(
 			image->pixels[index + 3] = 255;
 		}
 	}
-	//png_image->saveImage("output.png");
 
 	delete[] framebuffer;
 }
