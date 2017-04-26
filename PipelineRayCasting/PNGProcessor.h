@@ -19,5 +19,6 @@ private:
 	SharpenFilter _sharpen;
 	BlurFilter _blur;
 	EdgeFilter _edge;
+	std::vector<unsigned char> originalPixels;
 };
 

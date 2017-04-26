@@ -15,7 +15,7 @@ PNGProcessor::~PNGProcessor()
 void PNGProcessor::processImage(int type,Image* image)
 {
 	if (originalImage == NULL) {
-		setOriginal(image);
+		originalPixels = image->pixels;
 		//originalImage->pixels = 
 			//memcpy(&originalImage->pixels, &image->pixels,sizeof(unsigned char)image->pixels));
 	}
@@ -47,7 +47,7 @@ void PNGProcessor::processImage(int type,Image* image)
 }
 
 void PNGProcessor::getOriginal(Image* image) {
-	image->pixels = originalImage->pixels;
+	image->pixels = originalPixels;
 
 }
 
