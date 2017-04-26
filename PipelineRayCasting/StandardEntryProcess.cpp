@@ -144,10 +144,6 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 	stringstream fileLine;
 	string newLine;
 
-	//Vec3f color;
-	//Vec3f position;
-	//float reflection, transparency, emission;
-
 	while (!_arq.eof()) {
 		getline(_arq, newLine);
 
@@ -167,7 +163,6 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 			fileLine >> x;
 			fileLine >> y;
 			fileLine >> z;
-			//paramsFile cameraDefinition.position(Vec3f(x, y, z));
 			paramsFile->cameraDefinition.position = Vec3f(x, y, z);
 		}
 		else if (word == "fov:") {
@@ -180,7 +175,6 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 			fileLine >> x;
 			fileLine >> y;
 			fileLine >> z;
-			//paramsFile cameraDefinition.position(Vec3f(x, y, z));
 			paramsFile->cameraDefinition.setTarget(Vec3f(x, y, z));
 		}
 		else if (word == "nlight") {
@@ -217,8 +211,6 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 					if (word == "end") {
 						if (type == "light") {
 							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, 5, color, 0, 0, Vec3f(3))));
-							//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
-							//paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 0.0, 0.0), 0.8, Vec3f(0.0, 0.8, 0.0), 0, 0.5)));
 						}
 						type.clear();
 						next = true;
@@ -276,8 +268,7 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 					}
 					if (word == "end") {
 						if (type == "sphere") {
-							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, size, color, refraction, transparency/*, emission*/)));
-							//paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 0.0, 0.0), 0.8, Vec3f(0.0, 0.8, 0.0), 0, 0.5)));
+							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, size, color, refraction, transparency)));
 						}
 						type.clear();
 						next = true;

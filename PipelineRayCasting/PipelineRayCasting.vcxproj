@@ -125,7 +125,7 @@
     <ClCompile Include="OutputProcessor.cpp" />
     <ClCompile Include="ParamsFile.cpp" />
     <ClCompile Include="PNGProcessor.cpp" />
-    <ClCompile Include="RayCasting.cpp" />
+    <ClCompile Include="RayTracing.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="SharpenFilter.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -147,7 +147,7 @@
     <ClInclude Include="OutputProcessor.h" />
     <ClInclude Include="ParamsFile.h" />
     <ClInclude Include="PNGProcessor.h" />
-    <ClInclude Include="RayCasting.h" />
+    <ClInclude Include="RayTracing.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="SharpenFilter.h" />
     <ClInclude Include="Sphere.h" />

@@ -15,7 +15,6 @@ public:
 	Camera cameraDefinition;
 	Sphere lightPointDefinition;
 	vector<Object*> objects;
-	//PostRenderFilter postRenderFilter;
 	int width, height;
 };
 

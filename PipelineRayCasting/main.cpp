@@ -1,6 +1,6 @@
 #include <iostream>
 #include "ParamsFile.h"
-#include "RayCasting.h"
+#include "RayTracing.h"
 #include "PNGProcessor.h"
 #include "StandardOutputProcessor.h"
 #include "StandardEntryProcess.h"
@@ -48,57 +48,14 @@ Matrix44f lookAt(Vec3f pos, Vec3f target, Vec3f up)
 	return mat;
 }
 
-//TODO use params from file instead
-void defineParams()
-{
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0)));
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 0.0, 0.0), 0.8, Vec3f(0.0, 0.8, 0.0), 0, 0.5)));
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(-2, 0.0, 0.0), 0.8, Vec3f(0.8, 0.0, 0.0), 0, 0.5)));
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(2, 0.0, 0.0), 0.8, Vec3f(0.0, 0.0, 0.8), 0, 0.5)));
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(10, 0, 10), 3, Vec3f(1, 0, 0), 0, 0.5)));
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0, 0, 0), 1, Vec3f(0, 0, 1), 1, 1.33)));
-
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));
-
-	//ParamsFile otherParams;
-	//myEntryPocessor->processEntry(&otherParams);
-
-	//myParamsFile.objects = otherParams.objects;
-
-	//myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(-15.0, 0, -10), 5, Vec3f(0.5, 0.5, 0), 1, 1.33)));
-
-
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 20, 10), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(3))));
-	myParamsFile.objects.push_back(dynamic_cast<Object*>(new Sphere(Vec3f(0.0, 25, -20), 5, Vec3f(0, 0, 0), 0, 0.0, Vec3f(1))));
-
-
-	double fov = 60;
-	Matrix44f m(0.945519, 0, -0.325569, 0, -0.179534, 0.834209, -0.521403, 0, 0.271593, 0.551447, 0.78876, 0, 4.208271, 8.374532, 17.932925, 1);
-
-	Vec3f pos(0, 0, -1);
-	Vec3f target(0, 0, 0);
-	//target = target - pos;
-	//target = target.normalize();
-
-	Camera myCam(lookAt(pos, /*pos + */target, Vec3f(0, -1, 0)), fov);
-
-	myParamsFile.cameraDefinition = myCam;
-
-	myParamsFile.width = 640;
-	myParamsFile.height = 480;
-}
-
 void initialize()
 {
 	srand(time(NULL));
 
-	myRender = new RayCasting();
+	myRender = new RayTracing();
 	myImageProcessor = new PNGProcessor();
 	myOutputProcessor = new StandardOutputProcessor();
 	myEntryPocessor = new StandardEntryProcess();
-
-	defineParams();
 }
 
 void init() {
@@ -109,12 +66,6 @@ void init() {
 	glPixelZoom(1, -1);
 }
 
-
-/*void processRender(/*vector<Sphere> objects, CameraDefinition camera, float w, float h)
-{
-	image = myRender->RenderScene(objects, camera, w, h);
-}*/
-
 void processEntry(ParamsFile paramsFile)
 {
 	ParamsFile newParams;
@@ -123,18 +74,13 @@ void processEntry(ParamsFile paramsFile)
 
 	Camera myCam(lookAt(newParams.cameraDefinition.position, newParams.cameraDefinition.getTarget(), Vec3f(0, 1, 0)), newParams.cameraDefinition.FOV());
 	
-	//Camera myCam(lookAt(pos, /*pos + */target, Vec3f(0, -1, 0)), fov);
 	myParamsFile.cameraDefinition = myCam;
 	myParamsFile.width = newParams.width;
 	myParamsFile.height = newParams.height;
-
-	//myParamsFile = myEntryPocessor->processEntry(paramsFile);
-	//cout << myparamsFile->objects.at(0);
 }
 
 void processRender()
 {
-	//cout << myparamsFile->objects.at(0);
 	image = myRender->RenderScene(myParamsFile.objects, myParamsFile.cameraDefinition, myParamsFile.width, myParamsFile.height);
 }
 
@@ -172,7 +118,7 @@ void keyboard(unsigned char key, int x, int y) {
 	}
 	if ('s' == key) {
 		//save
-		processOutput("OutImage.png");
+		processOutput("ImageWithFilter.png");
 	}
 	glutPostRedisplay();
 
@@ -209,8 +155,6 @@ void menu(int item)
 	return;
 }
 
-
-
 int main(int argc, char** argv)
 {
 	initialize();
@@ -223,8 +167,8 @@ int main(int argc, char** argv)
 	//Render Scene
 	processRender();
 
-	//Add filter
-	//processImage();
+	//Create image
+	processOutput("OriginalImage.png");
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -253,9 +197,6 @@ int main(int argc, char** argv)
 
 	//glutMouseFunc(mouse);
 	glutMainLoop();
-
-	//Create image
-	processOutput("NewImage.png");
 
 	system("pause");
 	return 0;

@@ -3,11 +3,11 @@
 
 using namespace std;
 
-class RayCasting : public Render
+class RayTracing : public Render
 {
 public:
-	RayCasting();
-	~RayCasting();
+	RayTracing();
+	~RayTracing();
 
 	Image* RenderScene(vector<Object*> objects, Camera camera, int w, int h);
 
