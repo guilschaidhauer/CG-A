@@ -1,0 +1,72 @@
+﻿# Definições 1º estágio
+begin stage 1
+ # Câmera
+ cam: 0.0 0.0 -4.0
+ fov: 60
+ target: 0.0 0.0 0.0
+ # Pontos de luz
+ nlight 1
+ begin light
+ position: 0 20 10
+ color: 0 0 0
+ end light
+ # definição de objetos
+ nobjects 4
+ # pode ser primitivas...
+ begin sphere
+ raio: 0.8 0.8 0.8
+ color: 0.0 0.8 0.0
+ position: 0 -2 0
+ refraction: 0
+ transparency: 0.5
+ emission: 0.4 0.4 0.4
+ end
+ begin sphere
+ raio: 0.8 0.8 0.8
+ color: 0.8 0.0 0.0
+ position: -2.0 0 0
+ refraction: 0
+ transparency: 0.5
+ emission: 0.4 0.4 0.4
+ end
+ begin sphere
+ raio: 10000 10000 10000
+ color: 0.2 0.2 0.2
+ position: 0.0 -10004 0
+ refraction: 0
+ transparency: 0
+ emission: 0 0 0
+ end
+ begin sphere
+ raio: 0.8 0.8 0.8
+ color: 0.0 0.0 0.8
+ position: 2.0 0 0
+ refraction: 0
+ transparency: 0.5
+ emission: 0.4 0.4 0.4
+ end
+end stage 1
+# Definições 3º estágio
+begin stage 3
+ # define algoritmo de render:
+ # rc (ray cast) ou rt (ray tracing)
+ program: rc
+end stage 3
+# Definições 4º estágio
+begin stage 4
+ # define filtros para pós-render
+ nfilter 2
+ begin blur
+ level: 0
+ type: r
+ end
+ begin sharpen
+ level: 0
+ type: r
+ end
+end stage 4
+# Definições 5º estágio
+begin stage 5
+# define saída do software tela (s) ou arquivo (f)
+ output: 640 480 f
+end stage 5

@@ -1,5 +1,6 @@
 #pragma once
 #include "ParamsFile.h"
+#include <fstream>
 
 using namespace std;
 
@@ -9,6 +10,9 @@ public:
 	EntryProcessor();
 	~EntryProcessor();
 
-	virtual void processEntry(ParamsFile paramsFile) = 0;
+	virtual ParamsFile processEntry(ParamsFile *paramsFile) = 0;
+
+	virtual ParamsFile processEntry2(ParamsFile *paramsFile) = 0;
 };
 
+		
