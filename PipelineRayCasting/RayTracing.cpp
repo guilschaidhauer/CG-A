@@ -35,9 +35,9 @@ void fresnel(const Vec3f &I, const Vec3f &N, const float &ior, float &kr)
 	float cosi = clamp(-1, 1, I.dotProduct(N));
 	float etai = 1, etat = ior;
 	if (cosi > 0) { std::swap(etai, etat); }
-	// Compute sini using Snell's law
+	// Snell's law
 	float sint = etai / etat * sqrtf(max(0.f, 1 - cosi * cosi));
-	// Total internal reflection
+	// reflection
 	if (sint >= 1) {
 		kr = 1;
 	}
@@ -60,7 +60,7 @@ Vec3f trace(
 {
 
 	Vec3f background_color = Vec3f(1,1,1);
-	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
+
 	float tnear = INFINITY;
 	Object* sphere = nullptr;
 	// find intersection of this ray with the sphere in the scene
@@ -74,22 +74,18 @@ Vec3f trace(
 			}
 		}
 	}
-	// if there's no intersection return black or background color
+
 
 	if (!sphere) 
 		return background_color;
 
-	Vec3f surfaceColor = 0; // color of the ray/surfaceof the object intersected by the ray
+	Vec3f surfaceColor = 0; 
 	Vec3f intersection = rayorig + raydir * tnear; // point of intersection
 	Vec3f normal;
 	Vec2f tex;
 	sphere->getSurfaceData(intersection, normal, tex); // normal at the intersection point
-	normal.normalize(); // normalize normal direction
-					  // If the normal and the view direction are not opposite to each other
-					  // reverse the normal direction. That also means we are inside the sphere so set
-					  // the inside bool to true. Finally reverse the sign of IdotN which we want
-					  // positive.
-	float bias = 0.01;//1e-4; // add some bias to the point from which we will be tracing
+	normal.normalize();
+	float bias = 1e-4; 
 	bool inside = false;
 	if (raydir.dotProduct(normal) > 0) {
 		normal = -normal, inside = true;
@@ -99,32 +95,32 @@ Vec3f trace(
 		float facingratio = -raydir.dotProduct(normal);
 		// change the mix value to tweak the effect
 		float fresneleffect = mix(pow(1 - facingratio, 3), 1, 0.1);
-		//fresnel(intersection, normal, 1.3, fresneleffect);
-		// compute reflection direction (not need to normalize because all vectors
-		// are already normalized)
+
+	//	fresnel(intersection, normal, sphere->refraction, fresneleffect);
+
 		Vec3f refldir = raydir - normal * 2 * raydir.dotProduct(normal);
 		refldir.normalize();
 		Vec3f reflection = trace(intersection + normal * bias, refldir, objects, depth + 1);
 		Vec3f refraction = 0;
 		// if the sphere is also transparent compute refraction ray (transmission)
 		if (sphere->transparency) {
-			float ior = 1.1, eta = (inside) ? ior : 1 / ior; // are we inside or outside the surface?
+			float ior = sphere->refraction/*1.1*/, eta = (inside) ? ior : 1 / ior; // are we inside or outside the surface?
 			float cosi = -normal.dotProduct(raydir);
 			float k = 1 - eta * eta * (1 - cosi * cosi);
 			Vec3f refrdir = raydir * eta + normal * (eta *  cosi - sqrt(k));
 			refrdir.normalize();
 			refraction = trace(intersection - normal * bias, refrdir, objects, depth + 1);
 		}
-		// Replaction + refraction
+
 		surfaceColor = (
 			reflection * fresneleffect +
 			refraction * (1 - fresneleffect) * sphere->transparency) * sphere->surfaceColor;
 	}
 	else {
-		// It's diffuse. Stop raytracing
+
 		for (unsigned i = 0; i < objects.size(); ++i) {
 			if (objects[i]->emissionColor.x > 0) {
-				// this is a light
+				// light
 				Vec3f transmission = 1;
 				Vec3f lightDirection = dynamic_cast<Sphere*> (objects[i])->getSphereCenter() - intersection;
 				lightDirection.normalize();
@@ -137,13 +133,10 @@ Vec3f trace(
 						}
 					}
 				}
-				//Vec3f temp;
-				//temp.doSum(sphere->surfaceColor * transmission *
-				//	max(float(0), nhit.dotProduct(lightDirection)) * objects[i]->emissionColor);
+
 				surfaceColor = surfaceColor + (sphere->surfaceColor * transmission *
 					max(float(0), normal.dotProduct(lightDirection)) * objects[i]->emissionColor);
-				//surfaceColor += (sphere->surfaceColor * transmission *
-				//	max(float(0), nhit.dotProduct(lightDirection)) * objects[i]->emissionColor);
+
 			}
 		}
 	}
@@ -156,7 +149,7 @@ Vec3f castRay(
 	const std::vector<Object*> objects)
 {
 	Vec3f hitColor = 0;
-	const Object *hitObject = nullptr; // this is a pointer to the hit object
+	//const Object *hitObject = nullptr; 
 	return trace(orig, dir, objects, 0);
 }
 
@@ -170,8 +163,10 @@ void render(
 	Vec3f orig;
 	camera.cameraToWorld().multVecMatrix(Vec3f(0, 0, 10), orig);
 	Vec3f value = 0;
+	
 	for (int j = 0; j < h; ++j) {
 		for (int i = 0; i < w; ++i) {
+	
 			float x = (2 * (i + 0.5) / (float)w - 1) * imageAspectRatio * scale;
 			float y = (1 - 2 * (j + 0.5) / (float)h) * scale;
 
@@ -180,7 +175,6 @@ void render(
 			camera.cameraToWorld().multDirMatrix(Vec3f(x, y, -1), dir);
 			dir.normalize();
 			*(pix++) = castRay(orig, dir, objects);
-			//fprintf(stderr, "\r%3d%c", int(j / (float)h * 100), '%');
 		}
 	}
 
@@ -206,9 +200,6 @@ Image* RayTracing::RenderScene(vector<Object*> objects, Camera camera, int w, in
 	Image* image = new Image(w, h);
 
 	const float kInfinity = INFINITY;
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_real_distribution<> dis(0, 1);
 
 	int width = w, height = h;
 	//render

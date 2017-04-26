@@ -24,7 +24,7 @@
 class Object {	
 	public:
 	Vec3f surfaceColor, emissionColor;      /// surface color and emission (light)
-	float transparency, reflection;         /// surface transparency and reflectivity
+	float transparency, reflection, refraction;         /// surface transparency and reflectivity
 	Object ();
 	virtual ~Object() {}
 	// method functions

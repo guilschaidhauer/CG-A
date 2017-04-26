@@ -3,7 +3,7 @@
 #include "SharpenFilter.h"
 #include "BlurFilter.h"
 #include "EdgeFilter.h"
-
+#pragma warning(disable:4996)
 class PNGProcessor : public ImageProcessor
 {
 public:

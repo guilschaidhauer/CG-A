@@ -210,7 +210,7 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 					}
 					if (word == "end") {
 						if (type == "light") {
-							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, 5, color, 0, 0, Vec3f(3))));
+							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, 5, color, 0, 0,0, Vec3f(3))));
 						}
 						type.clear();
 						next = true;
@@ -243,7 +243,7 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 				Vec3f position;
 				float x, y, z;
 				float r, g, b;
-				float refraction, emission, transparency, size;
+				float refraction, emission, transparency, reflection, size;
 				next = false;
 
 				while (!next) {
@@ -268,7 +268,8 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 					}
 					if (word == "end") {
 						if (type == "sphere") {
-							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, size, color, refraction, transparency)));
+							//position, radius, color, reflection, refraction, transparency, emissioncolor(light)																		
+							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, size, color, reflection, refraction, transparency)));
 						}
 						type.clear();
 						next = true;
@@ -285,6 +286,9 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 					}
 					if (word == "refraction:") {
 						fileLine >> refraction;
+					}
+					if (word == "reflection:") {
+						fileLine >> reflection;
 					}
 					if (word == "emission:") {
 						fileLine >> emission;

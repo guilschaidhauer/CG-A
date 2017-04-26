@@ -18,6 +18,7 @@ class Sphere : public Object {
         const float &r,
         const Vec3f &sc,
         const float &refl = 0,
+		const float &refr = 0,
         const float &transp = 0,
         const Vec3f &ec = 0);
 	//Sphere (Vect, double, Color);

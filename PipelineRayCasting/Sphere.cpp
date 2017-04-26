@@ -12,6 +12,7 @@ Sphere::Sphere(
         const float &r,
         const Vec3f &sc,
         const float &refl,
+		const float &refr,
         const float &transp,
         const Vec3f &ec) 
 {
@@ -22,6 +23,7 @@ Sphere::Sphere(
 		emissionColor = (ec);
 		transparency = (transp); 
 		reflection = (refl);
+		refraction = (refr);
 }
 
 /*Sphere::Sphere(const Vec3f &c, const double &r, const Color colorValue) {

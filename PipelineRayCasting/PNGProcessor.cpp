@@ -15,7 +15,10 @@ PNGProcessor::~PNGProcessor()
 void PNGProcessor::processImage(int type,Image* image)
 {
 	if (originalImage == NULL) {
-		originalPixels = image->pixels;
+		originalPixels.resize(image->w * image->h * 4);
+		//memcpy(&originalPixels,&image->pixels, image->pixels.size() );
+		//copy_n(originalPixels, image->pixels, sizeof(image->pixels));
+		 // = image->pixels;
 		//originalImage->pixels = 
 			//memcpy(&originalImage->pixels, &image->pixels,sizeof(unsigned char)image->pixels));
 	}

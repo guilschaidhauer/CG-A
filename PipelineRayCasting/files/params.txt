@@ -15,9 +15,10 @@ begin stage 1
  # pode ser primitivas...
  begin sphere
  raio: 0.8 0.8 0.8
- color: 0.0 0.8 0.0
+ color: 1 1 0.0
  position: 0 2 0
  refraction: 0
+ reflection: 0
  transparency: 0.5
  emission: 0.4 0.4 0.4
  end
@@ -25,7 +26,8 @@ begin stage 1
  raio: 0.8 0.8 0.8
  color: 0.0 0.8 0.0
  position: 0 -2 0
- refraction: 0
+ refraction: 1.5
+ reflection: 0.5
  transparency: 0.5
  emission: 0.4 0.4 0.4
  end
@@ -33,7 +35,8 @@ begin stage 1
  raio: 0.8 0.8 0.8
  color: 0.8 0.0 0.0
  position: -2.0 0 0
- refraction: 0
+ refraction: 1.5
+ reflection: 0.5
  transparency: 0.5
  emission: 0.4 0.4 0.4
  end
@@ -42,6 +45,7 @@ begin stage 1
  color: 0.2 0.2 0.2
  position: 0.0 -10004 0
  refraction: 0
+ reflection: 0
  transparency: 0
  emission: 0 0 0
  end
@@ -49,7 +53,8 @@ begin stage 1
  raio: 0.8 0.8 0.8
  color: 0.0 0.0 0.8
  position: 2.0 0 0
- refraction: 0
+ refraction: 1.5
+ reflection: 0
  transparency: 0.5
  emission: 0.4 0.4 0.4
  end

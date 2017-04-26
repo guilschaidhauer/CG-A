@@ -131,6 +131,7 @@ enum MENU_TYPE
 	BLUR,
 	EDGE,
 	GREYSCALE,
+	SAVE,
 	QUIT,
 };
 
@@ -143,8 +144,13 @@ void menu(int item)
 		exit(0);
 	}
 	break;
+	case MENU_TYPE::SAVE:
+	{
+		processOutput("result.png");
+	}
+	break;
 	default:
-	{     
+	{
 		processImage(item);
 	}
 	break;
@@ -188,6 +194,7 @@ int main(int argc, char** argv)
 	glutAddMenuEntry("Blur", BLUR);
 	glutAddMenuEntry("Edge", EDGE);
 	glutAddMenuEntry("Grey Scale", GREYSCALE);
+	glutAddMenuEntry("Save Image", SAVE);
 	glutAddMenuEntry("Quit", QUIT);
 
 
