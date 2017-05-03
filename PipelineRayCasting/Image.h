@@ -23,6 +23,7 @@ public:
 	void saveImage(string fileName);
 	//RGBType *pixels;
 	std::vector<unsigned char> pixels;
+	std::vector<float> zbuffer;
 	int w;
 	int h;
 	int dpi;

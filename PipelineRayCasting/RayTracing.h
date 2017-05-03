@@ -10,7 +10,5 @@ public:
 	~RayTracing();
 
 	Image* RenderScene(vector<Object*> objects, Camera camera, int w, int h);
-
-	int MAX_DEPTH;
 };
 

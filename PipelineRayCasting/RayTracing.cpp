@@ -1,6 +1,7 @@
 #include "RayTracing.h"
 
-float MAX_DEPTH = 3;
+float MAX_DEPTH = 0;
+float z = 0;
 
 RayTracing::RayTracing()
 {
@@ -76,11 +77,14 @@ Vec3f trace(
 	}
 
 
-	if (!sphere) 
+	if (!sphere) {
+		z = -1;
 		return background_color;
+	}
 
 	Vec3f surfaceColor = 0; 
 	Vec3f intersection = rayorig + raydir * tnear; // point of intersection
+	z = intersection.z;
 	Vec3f normal;
 	Vec2f tex;
 	sphere->getSurfaceData(intersection, normal, tex); // normal at the intersection point
@@ -175,6 +179,8 @@ void render(
 			camera.cameraToWorld().multDirMatrix(Vec3f(x, y, -1), dir);
 			dir.normalize();
 			*(pix++) = castRay(orig, dir, objects);
+			//cout << z << endl;
+			image->zbuffer[j * w + i] = z;
 		}
 	}
 

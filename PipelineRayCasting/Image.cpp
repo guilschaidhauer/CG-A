@@ -5,6 +5,7 @@ Image::Image(int width, int height)
 	w = width;
 	h = height;
 	pixels.resize(width * height * 4);
+	zbuffer.resize(width * height);
 }
 
 void Image::saveImage(string fileName)
