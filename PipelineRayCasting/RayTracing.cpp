@@ -59,7 +59,7 @@ Vec3f trace(
 	const int &depth)
 {
 
-	Vec3f background_color = Vec3f(1,1,1);
+	Vec3f background_color = Vec3f(0.05,0.05,0.05);
 
 	float tnear = INFINITY;
 	Object* sphere = nullptr;
@@ -96,7 +96,7 @@ Vec3f trace(
 		// change the mix value to tweak the effect
 		float fresneleffect = mix(pow(1 - facingratio, 3), 1, 0.1);
 
-	//	fresnel(intersection, normal, sphere->refraction, fresneleffect);
+		fresnel(intersection, normal, sphere->refraction, fresneleffect);
 
 		Vec3f refldir = raydir - normal * 2 * raydir.dotProduct(normal);
 		refldir.normalize();

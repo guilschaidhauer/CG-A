@@ -5,42 +5,20 @@ begin stage 1
  fov: 60
  target: 0.0 0.0 0.0
  # Pontos de luz
- nlight 2
+ nlight 1
  begin light
  position: 0 20 10
- color: 4 4 4
- end light
- begin light
- position: 0 20 -5
- color: 4 4 4
+ color: 5 5 5
  end light
  # definição de objetos
- nobjects 6
+ nobjects 2
  # pode ser primitivas...
  begin sphere
- raio: 0.8 0.8 0.8
- color: 1 1 0.0
- position: 0 0 -4
+ raio: 2 2 2
+ color: 0.7 0.0 0.5
+ position: 0 0 0
  refraction: 1.5
  reflection: 0
- transparency: 0.0
- emission: 0.4 0.4 0.4
- end
- begin sphere
- raio: 0.8 0.8 0.8
- color: 0.0 0.8 0.0
- position: 2 0 -2
- refraction: 1.5
- reflection: 0.5
- transparency: 0.5
- emission: 0.4 0.4 0.4
- end
- begin sphere
- raio: 0.8 0.8 0.8
- color: 0.8 0.0 0.0
- position: -2 0 -2
- refraction: 1.5
- reflection: 0.5
  transparency: 0.5
  emission: 0.4 0.4 0.4
  end
@@ -52,24 +30,6 @@ begin stage 1
  reflection: 0
  transparency: 0
  emission: 0 0 0
- end
- begin sphere
- raio: 0.8 0.8 0.8
- color: 0.0 0.0 0.8
- position: -3 0 1
- refraction: 1.5
- reflection: 0
- transparency: 0.5
- emission: 0.4 0.4 0.4
- end
- begin sphere
- raio: 0.8 0.8 0.8
- color: 0.8 0.1 0.7
- position: 3 0 1
- refraction: 1.5
- reflection: 0
- transparency: 0.5
- emission: 0.4 0.4 0.4
  end
 end stage 1
 # Definições 3º estágio

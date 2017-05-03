@@ -15,7 +15,7 @@ StandardEntryProcess::~StandardEntryProcess()
 ParamsFile StandardEntryProcess::processEntry(ParamsFile *paramsFile)
 {
 	ifstream file;
-	file.open("files/params.txt");
+	file.open("files/params2.txt");
 
 	if (!file.is_open())
 	{
@@ -210,7 +210,7 @@ ParamsFile StandardEntryProcess::processEntry2(ParamsFile * paramsFile)
 					}
 					if (word == "end") {
 						if (type == "light") {
-							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, 5, color, 0, 0,0, Vec3f(3))));
+							paramsFile->objects.push_back(dynamic_cast<Object*>(new Sphere(position, 5, color, 0, 0,0, color)));
 						}
 						type.clear();
 						next = true;
